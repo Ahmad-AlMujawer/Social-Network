@@ -1,3 +1,46 @@
 body {
     background-color: ghostwhite;
 }
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+form {
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40vw;
+    height: 60vh;
+}
+input {
+    padding: 8px;
+    margin: 5px 12px;
+}
+button {
+    width: 30%;
+    padding: 5px;
+    align-self: center;
+    cursor: pointer;
+    margin-top: 65px;
+}
+.username {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.birthday {
+    display: flex;
+    justify-content: space-between;
+}
+select {
+    padding: 10px;
+    margin: 5px 20px;
+
+    border: none;
+    background: aquamarine;
+}
+form p {
+    align-self: center;
+}

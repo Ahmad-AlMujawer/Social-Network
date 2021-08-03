@@ -4,7 +4,7 @@ export class Registration extends Component {
     constructor() {
         super();
         this.state = {
-            error: true,
+            error: false,
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -17,10 +17,7 @@ export class Registration extends Component {
             .then((resp) => {
                 if (resp.data.success) {
                     console.log("resp: ", resp);
-                    // stuff worked well with registering we want to do sth
-                    // that sth is trigger a reload, so that our start.js runs
-                    // one more time and asks the server agin whether or not
-                    // the user has the correct cookie :)
+                    location.reload();
                 } else {
                     this.setState({
                         error: true,
@@ -58,30 +55,55 @@ export class Registration extends Component {
                     </h2>
                 )}
                 <form>
-                    <input
-                        name="first"
-                        placeholder="First Name"
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        name="last"
-                        placeholder="Last Name"
-                        onChange={this.handleChange}
-                    />
+                    <div className="username">
+                        <input
+                            name="first"
+                            placeholder="First Name"
+                            onChange={this.handleChange}
+                            required
+                        />
+                        <input
+                            name="last"
+                            placeholder="Last Name"
+                            onChange={this.handleChange}
+                            required
+                        />
+                    </div>
                     <input
                         name="email"
                         placeholder="Email"
                         onChange={this.handleChange}
+                        required
                     />
                     <input
                         name="password"
                         placeholder="Password"
                         type="password"
                         onChange={this.handleChange}
+                        required
                     />
+                    <div className="birthday">
+                        <input
+                            type="date"
+                            id="birthday"
+                            name="birthday"
+                            onChange={this.handleChange}
+                            required
+                        />
+                        <select name="gender">
+                            <option defaultValue>Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Divers">other</option>
+                        </select>
+                    </div>
+
                     <button onClick={(e) => this.handleSubmit(e)}>
                         Signup
                     </button>
+                    <p>
+                        Already registered? <a href="">login</a>
+                    </p>
                 </form>
             </section>
         );
