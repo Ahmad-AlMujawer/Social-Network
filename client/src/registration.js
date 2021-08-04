@@ -1,5 +1,7 @@
 import { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 export class Registration extends Component {
     constructor() {
         super();
@@ -16,28 +18,24 @@ export class Registration extends Component {
             .post("/register", this.state)
             .then((resp) => {
                 if (resp.data.success) {
-                    console.log("resp: ", resp);
+                    // console.log("resp in my if register: ", resp);
                     location.reload();
                 } else {
                     this.setState({
                         error: true,
                     });
-                    // we should render an error!
-                    // we need to update our component's state to conditionally
-                    // make an error appear
                 }
             })
             .catch((err) => {
                 console.log("error in POST /register:", err);
                 this.setState({
                     error: true,
-                }); // we need to update our component's state to conditionally
-                // make an error appear
+                });
             });
     }
     handleChange({ target }) {
-        console.log("handerChange input for: ", target.name);
-        console.log("user input value: ", target.value);
+        // console.log("handerChange input for: ", target.name);
+        // console.log("user input value: ", target.value);
         this.setState(
             {
                 [target.name]: target.value,
@@ -102,7 +100,7 @@ export class Registration extends Component {
                         Signup
                     </button>
                     <p>
-                        Already registered? <a href="">login</a>
+                        Already registered? <Link to="/login">login</Link>
                     </p>
                 </form>
             </section>

@@ -3,7 +3,7 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const db = require("./db");
-const { hash } = require("./bc");
+const { compare, hash } = require("./bc");
 const cookieSession = require("cookie-session");
 let sessionSecret;
 if (process.env.NODE_ENV == "production") {
@@ -37,13 +37,13 @@ app.get("/user/id.json", function (req, res) {
         userId: req.session.userId,
     });
 });
-
+//-------------------------------------------------------------
 app.post("/register", (req, res) => {
     const { first, last, email, password } = req.body;
 
     hash(password)
         .then((hashedPass) => {
-            console.log("hashedPass:  ", hashedPass);
+            console.log("hashedPass in register:  ", hashedPass);
 
             db.register(first, last, email, hashedPass)
                 .then((data) => {
@@ -59,6 +59,38 @@ app.post("/register", (req, res) => {
         })
         .catch((err) => {
             console.log("error in POST /register in hash", err);
+            res.json({ error: true });
+        });
+});
+//-------------------------------------------------------------
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    hash(password)
+        .then((hashedPass) => {
+            console.log("hashedPass in login:  ", hashedPass);
+            db.getLoginInfo(email)
+                .then((data) => {
+                    compare(password, data.rows[0].hashed_password)
+                        .then((match) => {
+                            if (match === true) {
+                                req.session.userId = data.rows[0].id;
+                                res.json({ success: true });
+                            } else {
+                                res.json({ success: false });
+                            }
+                        })
+                        .catch((err) => {
+                            console.log("error in compare:", err);
+                            res.json({ error: true });
+                        });
+                })
+                .catch((err) => {
+                    console.log("error in getLoginInfo:", err);
+                    res.json({ error: true });
+                });
+        })
+        .catch((err) => {
+            console.log("error in has in Login", err);
             res.json({ error: true });
         });
 });

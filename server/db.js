@@ -11,3 +11,7 @@ module.exports.register = (first, last, email, hashed_password) => {
         [first, last, email, hashed_password]
     );
 };
+
+module.exports.getLoginInfo = (email) => {
+    return db.query(`SELECT * FROM users WHERE email=$1`, [email]);
+};
