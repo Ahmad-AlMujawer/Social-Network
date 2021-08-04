@@ -5,6 +5,10 @@ const path = require("path");
 const db = require("./db");
 const { compare, hash } = require("./bc");
 const cookieSession = require("cookie-session");
+const cryptoRandomString = require("crypto-random-string");
+const secretCode = cryptoRandomString({
+    length: 6,
+});
 let sessionSecret;
 if (process.env.NODE_ENV == "production") {
     sessionSecret = process.env.SESSION_SECRET;
@@ -37,7 +41,7 @@ app.get("/user/id.json", function (req, res) {
         userId: req.session.userId,
     });
 });
-//-------------------------------------------------------------
+//-----------------------------register--------------------------------
 app.post("/register", (req, res) => {
     const { first, last, email, password } = req.body;
 
@@ -62,7 +66,7 @@ app.post("/register", (req, res) => {
             res.json({ error: true });
         });
 });
-//-------------------------------------------------------------
+//----------------------------login---------------------------------
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     hash(password)
@@ -94,6 +98,16 @@ app.post("/login", (req, res) => {
             res.json({ error: true });
         });
 });
+//-----------------------------password-reset--------------------------------
+app.post("/password/reset/start", (req, res) => {
+    const { email } = req.body;
+});
+
+//-------------------------------------------------------------
+app.post("/password/reset/verfiy", (req, res) => {
+    const { code, password } = req.body;
+});
+
 //-------------------------------------------------------------
 
 app.get("/logout", (req, res) => {

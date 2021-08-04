@@ -10,7 +10,7 @@ export class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit(e) {
-        e.preventDefault;
+        e.preventDefault();
         console.log("Login was clicked");
         console.log("this.state in Login handelSubmit: ", this.state);
         axios
@@ -68,6 +68,7 @@ export class Login extends Component {
                         Not a registered?
                         <Link to="/">register here.</Link>
                     </p>
+                    <Link to="/rest-password">forgot your password?</Link>
                 </form>
             </section>
         );

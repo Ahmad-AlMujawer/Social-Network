@@ -9,7 +9,7 @@ axios.get("/user/id.json").then(function ({ data }) {
         // user registered/is logged in therefore the user
         // should NOT see Welcome -> Registration, BUT instead see our logo
         ReactDOM.render(
-            <img src="/logo.gif" alt="logo" />,
+            <img src="/logo.png" alt="logo" />,
             document.querySelector("main")
         );
     }
