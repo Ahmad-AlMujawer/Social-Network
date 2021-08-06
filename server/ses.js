@@ -32,5 +32,5 @@ exports.sendEmail = function (recipient, message, subject) {
         })
         .promise()
         .then(() => console.log("ses.sendEmail it worked!"))
-        .catch((err) => console.log("error in ses.senEmail: ", err));
+        .catch((err) => console.log("error in ses.sendEmail: ", err));
 };

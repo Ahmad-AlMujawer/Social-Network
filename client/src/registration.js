@@ -39,20 +39,20 @@ export class Registration extends Component {
         this.setState(
             {
                 [target.name]: target.value,
-            },
-            console.log("this.state in Registration handleChange: ", this.state)
+            }
+            // console.log("this.state in Registration handleChange: ", this.state)
         );
     }
     render() {
         return (
             <section>
-                {this.state.error && (
-                    <h2 style={{ color: "red" }}>
-                        {this.state.error} Somthing went wrong!! Please try it
-                        nochmal 😄
-                    </h2>
-                )}
-                <form>
+                <form className="input_box">
+                    {this.state.error && (
+                        <h3 style={{ color: "aquamarine" }}>
+                            {this.state.error} Somthing went wrong!! Please try
+                            it nochmal 😄
+                        </h3>
+                    )}
                     <div className="username">
                         <input
                             name="first"
@@ -92,7 +92,7 @@ export class Registration extends Component {
                             <option defaultValue>Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
-                            <option value="Divers">other</option>
+                            <option value="Divers">Divers</option>
                         </select>
                     </div>
 

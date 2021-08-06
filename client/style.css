@@ -2,20 +2,24 @@
  #FFF9E4; */
 
 body {
-    background-color: ghostwhite;
+    background-image: url("/mandala-illustration_53876-81805.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
 }
 section {
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
-form {
+.input_box {
     background-color: aquamarine;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 40vw;
+    background: linear-gradient(120deg, #a14d35, transparent);
     height: 60vh;
+    border-radius: 20px;
 }
 input {
     padding: 8px;
@@ -26,11 +30,10 @@ button {
     padding: 5px;
     align-self: center;
     cursor: pointer;
-    margin-top: 65px;
 }
 .username {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 .birthday {
@@ -46,4 +49,11 @@ select {
 }
 form p {
     align-self: center;
+}
+.logo {
+    width: 200px;
+}
+.logo_container {
+    display: flex;
+    justify-content: center;
 }

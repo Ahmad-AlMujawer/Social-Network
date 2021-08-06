@@ -20,8 +20,7 @@ export class RestPassword extends Component {
             console.log("this.state in RestPassword: ", this.state)
         );
     }
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit() {
         const { view } = this.state;
         if (view === 1) {
             axios
@@ -40,13 +39,12 @@ export class RestPassword extends Component {
                     );
                     return this.setState({ error: true });
                 });
-        }
-        if (view === 2) {
+        } else if (view === 2) {
             axios
                 .post("/password/reset/verify ", this.state)
                 .then((resp) => {
                     if (resp.data.success) {
-                        return this.setState({ view: 3 });
+                        return this.setState({ view: 3, error: false });
                     } else {
                         return this.setState({ error: true });
                     }
@@ -65,7 +63,7 @@ export class RestPassword extends Component {
         if (this.state.view === 1) {
             return (
                 <div>
-                    <form>
+                    <div className="input_box">
                         {this.state.error && (
                             <h2 style={{ color: "red" }}>
                                 {this.state.error} Somthing went wrong!! Please
@@ -78,39 +76,36 @@ export class RestPassword extends Component {
                             onChange={this.handleChange}
                         />
                         <button onClick={this.handleSubmit}>Submit</button>
-                    </form>
+                    </div>
                 </div>
             );
         } else if (this.state.view === 2) {
             return (
-                <div>
-                    <form>
-                        {this.state.error && (
-                            <h2 style={{ color: "red" }}>
-                                {this.state.error} Somthing went wrong!! Please
-                                try it nochmal 😄
-                            </h2>
-                        )}
-                        <h2>
-                            an email with a 6 digit verification code has been
-                            sent to your email adress. Please enter this code
-                            belwo.
-                        </h2>
-                        <input
-                            name="code"
-                            placeholder="6-digit code"
-                            onChange={this.handleChange}
-                        />
-                        <input
-                            name="newPW"
-                            placeholder="new password"
-                            onChange={this.handleChange}
-                        />
-                        <button onClick={this.handleSubmit}>Verify</button>
-                        <button>
-                            <Link to="/login">Cancel</Link>Cancel
-                        </button>
-                    </form>
+                <div className="input_box">
+                    {this.state.error && (
+                        <h3 style={{ color: "red" }}>
+                            Somthing went wrong!! Please try it nochmal 😄
+                        </h3>
+                    )}
+                    <p>
+                        an email with a 6 digit verification code has been sent
+                        to your email adress. Please enter this code belwo.
+                    </p>
+                    <input
+                        name="code"
+                        placeholder="6-digit code"
+                        onChange={this.handleChange}
+                    />
+                    <input
+                        name="password"
+                        type="password"
+                        placeholder="new password"
+                        onChange={this.handleChange}
+                    />
+                    <button onClick={this.handleSubmit}>Verify</button>
+                    <button>
+                        <Link to="/login">Cancel</Link>
+                    </button>
                 </div>
             );
         } else if (this.state.view === 3) {

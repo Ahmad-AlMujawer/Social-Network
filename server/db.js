@@ -1,7 +1,7 @@
 const spicedPg = require("spiced-pg");
 const db = spicedPg(
     process.env.DATABASE_URL ||
-        "postgres:postgres:postgres@localhost:5432/petition"
+        "postgres:postgres:postgres@localhost:5432/socialNetwork"
 );
 
 module.exports.register = (first, last, email, hashed_password) => {
