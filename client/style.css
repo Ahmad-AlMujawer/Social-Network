@@ -57,3 +57,28 @@ form p {
     display: flex;
     justify-content: center;
 }
+.toggle_btn {
+    font-size: 30px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+.ProfilePic_container {
+    margin: 0;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+.togglemodal_container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    background-color: rgba(36, 36, 36, 0.74);
+    z-index: 99;
+}
+.uploader button {
+}

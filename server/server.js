@@ -1,19 +1,43 @@
 const express = require("express");
 const app = express();
 const compression = require("compression");
-const path = require("path");
 const db = require("./db");
 const { compare, hash } = require("./bc");
 const cookieSession = require("cookie-session");
 const cryptoRandomString = require("crypto-random-string");
-
+const s3 = require("./s3.js");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
 const ses = require("./ses.js");
+
+//-----------------------------------------------------------
+
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
+//-------------------------------------------------------------
 let sessionSecret;
 if (process.env.NODE_ENV == "production") {
     sessionSecret = process.env.SESSION_SECRET;
 } else {
     sessionSecret = require("../secrets.json").SESSION_SECRET;
 }
+//-----------------------------------------------------------
 app.use(
     cookieSession({
         secret: `${sessionSecret}`,
@@ -73,8 +97,10 @@ app.post("/login", (req, res) => {
                     if (match === true) {
                         req.session.userId = data.rows[0].id;
                         res.json({ success: true });
+                        return;
                     } else {
                         res.json({ success: false });
+                        return;
                     }
                 })
                 .catch((err) => {
@@ -110,6 +136,7 @@ app.post("/password/reset/start", (req, res) => {
                         .catch((err) => {
                             console.log("error in sending an email: ", err);
                             res.json({ error: true });
+                            return;
                         })
                 )
                 .catch((err) => {
@@ -123,31 +150,45 @@ app.post("/password/reset/start", (req, res) => {
                 success: false,
                 error: "Somthing went wrong! Please try again.",
             });
+            return;
         }
     });
 });
 
-//-------------------------------------------------------------
-app.post("/password/reset/verfiy", (req, res) => {
+//-----------------------password-verify-----------------------
+app.post("/password/reset/verify", (req, res) => {
     const { resetCode, email, password } = req.body;
     db.verifyCode(email)
         .then((data) => {
+            const secretCode = cryptoRandomString({
+                length: 6,
+            });
             if (resetCode === data.rows[0].secretCode) {
+                console.log("secretCode outside: ", secretCode);
                 hash(password)
                     .then((hashedPass) => {
                         db.resetPassword(data.rows[0].email, hashedPass)
-                            .then(res.json({ success: true }))
+                            .then(() => {
+                                res.json({ success: true });
+                                return;
+                            })
                             .catch((err) => {
                                 console.log(
                                     "error in db.resetPassword POST/verfiy: ",
                                     err
                                 );
+                                res.json({ success: false });
+                                return;
                             });
                     })
                     .catch((err) => {
                         console.log("error in hashedPass POST/verify: ", err);
                         res.json({ success: false });
+                        return;
                     });
+            } else {
+                res.json({ success: false });
+                return;
             }
         })
         .catch((err) => {
@@ -156,6 +197,30 @@ app.post("/password/reset/verfiy", (req, res) => {
         });
 });
 
+//------------------GET user---------------------------------
+app.get("/user", (req, res) => {
+    db.getUser(req.session.userId)
+        .then((data) => {
+            res.json(data.rows[0]);
+        })
+        .catch((err) => {
+            console.log("error in db.getUser /user: ", err);
+            res.json({ success: false });
+        });
+});
+
+//------------------------Uploader-------------------------------------
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    const url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
+    db.addProfilePic(url, req.session.userId)
+        .then((data) => {
+            console.log("data from db.addProfilePic: ", data.rows);
+            res.json({ success: true });
+            return;
+        })
+        .catch((err) => console.log("error in db.addProfilePic /upload:", err));
+    res.json({ success: false });
+});
 //-------------------------------------------------------------
 
 app.get("/logout", (req, res) => {

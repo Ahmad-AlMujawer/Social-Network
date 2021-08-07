@@ -11,9 +11,11 @@ export default class App extends Component {
             first: "",
             last: "",
             age: "",
-            imageUrl: "",
+            imageurl: "",
             uploaderIsVisible: false,
         };
+        this.toggleModal = this.toggleModal.bind(this);
+        this.methodInApp = this.methodInApp.bind(this);
     }
 
     // this function runs the second the component is rendered!
@@ -27,7 +29,7 @@ export default class App extends Component {
                     first: resp.data.first,
                     last: resp.data.last,
                     age: resp.data.age,
-                    imageUrl: resp.data.imageUrl,
+                    imageurl: resp.data.imageurl,
                 });
             })
             .catch((err) => {
@@ -42,39 +44,39 @@ export default class App extends Component {
         });
     }
 
-    // this fn is responsible for receiving your imageUrl from uploader
+    // this fn is responsible for receiving your imageurl from uploader
     // and then storing it to its state
-    methodInApp(arg) {
+    methodInApp(imageurl) {
         console.log(
             "methodInApp is running! Argument passed to it is --> ",
-            arg
+            imageurl
         );
         this.setState({
-            imageUrl,
+            imageurl: imageurl,
         });
-        // make sure you set the imageUrl you received from uploader in state!
+        // this.toggleModal();
     }
 
     render() {
         return (
             <div>
                 <Logo />
-                <h1>Hello from App!</h1>
-
+                <a href="/logout">Logout</a>
                 <ProfilePic
                     first={this.state.first}
                     last={this.state.last}
                     age={this.state.age}
-                    imageUrl={this.state.imageUrl}
+                    imageurl={this.state.imageurl}
                 />
+                <div className="togglemodal_container">
+                    <button className="toggle_btn" onClick={this.toggleModal}>
+                        📷
+                    </button>
 
-                <h2 onClick={() => this.toggleModal()}>
-                    Click here to toggle uploader visibility
-                </h2>
-
-                {this.state.uploaderIsVisible && (
-                    <Uploader methodInApp={this.methodInApp} />
-                )}
+                    {this.state.uploaderIsVisible && (
+                        <Uploader methodInApp={this.methodInApp} />
+                    )}
+                </div>
             </div>
         );
     }

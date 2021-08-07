@@ -25,7 +25,7 @@ module.exports.storeRestCode = (email, code) => {
 
 module.exports.verifyCode = (code) => {
     return db.query(
-        `SELECT * FROM reset_codes WHERE code=$1 AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'`,
+        `SELECT * FROM reset_codes WHERE code=$1 AND CURRENT_TIMESTAMP - timestamp < INTERVAL '10 minutes'`,
         [code]
     );
 };
@@ -37,3 +37,13 @@ module.exports.resetPassword = (email, hashed_password) => {
     ]);
 };
 //-----------------------------------------------------------------------------------
+module.exports.getUser = (id) => {
+    return db.query(`SELECT * FROM users WHERE id=$1`, [id]);
+};
+
+module.exports.addProfilePic = (url, id) => {
+    return db.query(
+        `UPDATE users SET imageurl=$1 WHERE id=$2 RETURNING imageurl`,
+        [url, id]
+    );
+};

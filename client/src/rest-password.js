@@ -76,6 +76,9 @@ export class RestPassword extends Component {
                             onChange={this.handleChange}
                         />
                         <button onClick={this.handleSubmit}>Submit</button>
+                        <button>
+                            <Link to="/login">Cancel</Link>
+                        </button>
                     </div>
                 </div>
             );

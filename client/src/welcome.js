@@ -2,12 +2,12 @@ import { Registration } from "./registration";
 import { Login } from "./login";
 import { RestPassword } from "./rest-password";
 import { HashRouter, Route } from "react-router-dom";
-import App from "./App";
+import { Logo } from "./logo";
 
 export default function Welcome() {
     return (
         <div id="welcome">
-            <App />
+            <Logo />
 
             <HashRouter>
                 <div>

@@ -84,7 +84,7 @@ export class Registration extends Component {
                         <input
                             type="date"
                             id="birthday"
-                            name="birthday"
+                            name="age"
                             onChange={this.handleChange}
                             required
                         />

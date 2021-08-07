@@ -1,12 +1,11 @@
-export function ProfilePic({ first, last, imageUrl, age }) {
-    imageUrl = imageUrl || "default.png";
+export function ProfilePic({ first, last, imageurl, age }) {
+    imageurl = imageurl || "default.png";
     return (
-        <div>
-            <h2>Im in charge of rendering something!</h2>
+        <div className="ProfilePic_container">
+            <img className="profile-pic" src={imageurl} alt={last} />
             <h3>
-                Hi my name is {first} {last} and Im {age} years old!
+                {first} {last} {age}
             </h3>
-            <img className="profile-pic" src={imageUrl} alt="image " />
         </div>
     );
 }
