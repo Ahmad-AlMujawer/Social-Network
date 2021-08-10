@@ -8,6 +8,7 @@ CREATE TABLE users (
      email           VARCHAR NOT NULL UNIQUE CHECK (email != ''),
      hashed_password VARCHAR NOT NULL CHECK (hashed_password != ''),
      imageurl VARCHAR ,
+     bio VARCHAR,
     
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 

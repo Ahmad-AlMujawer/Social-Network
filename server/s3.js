@@ -34,8 +34,7 @@ exports.upload = (req, res, next) => {
 
     promise
         .then(() => {
-            // it worked!!!
-            console.log("it worked!!!");
+            // console.log("it worked!!!");
             next();
         })
         .catch((err) => {

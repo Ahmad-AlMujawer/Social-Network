@@ -36,14 +36,37 @@ module.exports.resetPassword = (email, hashed_password) => {
         hashed_password,
     ]);
 };
-//-----------------------------------------------------------------------------------
+//----------------------------getUser-------------------------------------------------------
 module.exports.getUser = (id) => {
     return db.query(`SELECT * FROM users WHERE id=$1`, [id]);
 };
 
-module.exports.addProfilePic = (url, id) => {
+module.exports.getOtherUser = (id) => {
     return db.query(
-        `UPDATE users SET imageurl=$1 WHERE id=$2 RETURNING imageurl`,
-        [url, id]
+        `
+    SELECT first, last, imageurl, bio
+    FROM users
+    WHERE id=$1`,
+        [id]
     );
 };
+//----------------------PrfoilePic & Bio-------------------------------------------------------------
+
+module.exports.addProfilePic = (imageurl, id) => {
+    return db.query(
+        `UPDATE users SET imageurl=$1 WHERE id=$2 RETURNING imageurl`,
+        [imageurl, id]
+    );
+};
+
+module.exports.addBio = (bio, id) => {
+    return db.query(
+        `
+    UPDATE users 
+    SET bio = $1
+    WHERE id = $2
+    RETURNING bio`,
+        [bio, id]
+    );
+};
+//-----------------------------------------------------------------------------------

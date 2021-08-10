@@ -1,8 +1,12 @@
+import axios from "axios";
 import { Component } from "react";
 import { Logo } from "./logo";
 import { ProfilePic } from "./ProfilePic.js";
 import { Uploader } from "./Uploader";
-import axios from "axios";
+import { Profile } from "./Profile";
+import { Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
+import { otherProfile } from "./otherProfile.js";
 
 export default class App extends Component {
     constructor() {
@@ -13,23 +17,25 @@ export default class App extends Component {
             age: "",
             imageurl: "",
             uploaderIsVisible: false,
+            bio: "",
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.methodInApp = this.methodInApp.bind(this);
+        this.updateBioInApp = this.updateBioInApp.bind(this);
     }
 
     // this function runs the second the component is rendered!
     componentDidMount() {
-        console.log("App mounted");
         axios
             .get("/user", this.state)
             .then((resp) => {
-                console.log("resp in axios GET /user: ", resp);
+                // console.log("resp in axios GET /user: ", resp);
                 this.setState({
                     first: resp.data.first,
                     last: resp.data.last,
                     age: resp.data.age,
                     imageurl: resp.data.imageurl,
+                    bio: resp.data.bio,
                 });
             })
             .catch((err) => {
@@ -47,37 +53,78 @@ export default class App extends Component {
     // this fn is responsible for receiving your imageurl from uploader
     // and then storing it to its state
     methodInApp(imageurl) {
-        console.log(
-            "methodInApp is running! Argument passed to it is --> ",
-            imageurl
-        );
         this.setState({
             imageurl: imageurl,
         });
-        // this.toggleModal();
+    }
+    updateBioInApp(draftBio) {
+        this.setState({ bio: draftBio });
     }
 
     render() {
         return (
-            <div>
-                <Logo />
-                <a href="/logout">Logout</a>
-                <ProfilePic
-                    first={this.state.first}
-                    last={this.state.last}
-                    age={this.state.age}
-                    imageurl={this.state.imageurl}
-                />
-                <div className="togglemodal_container">
-                    <button className="toggle_btn" onClick={this.toggleModal}>
-                        📷
-                    </button>
+            <BrowserRouter>
+                <div id="App_container">
+                    <nav className="navbar">
+                        <div className="navbar_container">
+                            <Logo id="navbar_logo" />
+                            <ul className="navbar_menu">
+                                <li className="navbar_list">
+                                    <a className="navbar_links" href="logout">
+                                        Logout
+                                    </a>
+                                </li>
+                                <li className="navbar_list">
+                                    <Link to="/" className="navbar_links">
+                                        Profile
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div id="togglemodal_container">
+                        <button
+                            className="toggle_btn"
+                            onClick={this.toggleModal}
+                        >
+                            📷
+                        </button>
+                        {this.state.uploaderIsVisible && (
+                            <Uploader
+                                methodInApp={this.methodInApp}
+                                methodInUploader={this.toggleModal}
+                            />
+                        )}
+                    </div>
+                    <div id="ProfilePic_container">
+                        <ProfilePic
+                            first={this.state.first}
+                            last={this.state.last}
+                            age={this.state.age}
+                            imageurl={this.state.imageurl}
+                        />
+                    </div>
 
-                    {this.state.uploaderIsVisible && (
-                        <Uploader methodInApp={this.methodInApp} />
-                    )}
+                    <Route
+                        exact
+                        path="/"
+                        render={() => (
+                            <div className="profile_container">
+                                <Profile
+                                    id={this.state.id}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    imageurl={this.state.imageurl}
+                                    onClick={this.toggleModal}
+                                    bio={this.state.bio}
+                                    updateBioInApp={this.updateBioInApp}
+                                />
+                            </div>
+                        )}
+                    />
+                    <Route path="/user/:id" component={otherProfile} />
                 </div>
-            </div>
+            </BrowserRouter>
         );
     }
 }

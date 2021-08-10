@@ -1,11 +1,13 @@
-export function ProfilePic({ first, last, imageurl, age }) {
+export function ProfilePic({ first, last, imageurl, toggleModal }) {
     imageurl = imageurl || "default.png";
     return (
         <div className="ProfilePic_container">
-            <img className="profile-pic" src={imageurl} alt={last} />
-            <h3>
-                {first} {last} {age}
-            </h3>
+            <img
+                className="profile-pic"
+                src={imageurl}
+                alt={first && last}
+                onClick={toggleModal}
+            />
         </div>
     );
 }

@@ -157,39 +157,29 @@ app.post("/password/reset/start", (req, res) => {
 
 //-----------------------password-verify-----------------------
 app.post("/password/reset/verify", (req, res) => {
-    const { resetCode, email, password } = req.body;
-    db.verifyCode(email)
-        .then((data) => {
-            const secretCode = cryptoRandomString({
-                length: 6,
-            });
-            if (resetCode === data.rows[0].secretCode) {
-                console.log("secretCode outside: ", secretCode);
-                hash(password)
-                    .then((hashedPass) => {
-                        db.resetPassword(data.rows[0].email, hashedPass)
-                            .then(() => {
-                                res.json({ success: true });
-                                return;
-                            })
-                            .catch((err) => {
-                                console.log(
-                                    "error in db.resetPassword POST/verfiy: ",
-                                    err
-                                );
-                                res.json({ success: false });
-                                return;
-                            });
-                    })
-                    .catch((err) => {
-                        console.log("error in hashedPass POST/verify: ", err);
-                        res.json({ success: false });
-                        return;
-                    });
-            } else {
-                res.json({ success: false });
-                return;
-            }
+    db.verifyCode(req.body.email)
+        .then(() => {
+            hash(req.body.password)
+                .then((hashedPass) => {
+                    db.resetPassword(req.body.email, hashedPass)
+                        .then(() => {
+                            res.json({ success: true });
+                            return;
+                        })
+                        .catch((err) => {
+                            console.log(
+                                "error in db.resetPassword POST/verfiy: ",
+                                err
+                            );
+                            res.json({ success: false });
+                            return;
+                        });
+                })
+                .catch((err) => {
+                    console.log("error in hashedPass POST/verify: ", err);
+                    res.json({ success: false });
+                    return;
+                });
         })
         .catch((err) => {
             console.log("error in db.verifyCode POST/verify: ", err);
@@ -213,24 +203,54 @@ app.get("/user", (req, res) => {
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
     db.addProfilePic(url, req.session.userId)
-        .then((data) => {
-            console.log("data from db.addProfilePic: ", data.rows);
-            res.json({ success: true });
-            return;
+        .then(() => {
+            res.json({ success: true, imageurl: url });
         })
-        .catch((err) => console.log("error in db.addProfilePic /upload:", err));
-    res.json({ success: false });
+        .catch((err) => {
+            console.log("error in db.addProfilePic /upload:", err);
+            res.json({ success: false });
+        });
+});
+//-------------------------------------------------------------
+app.get("/api/user/:id", (req, res) => {
+    // console.log("req.url :>> ", req.url);
+    // const requestedId = req.url.substr(10);  this is a dangerous way to choose!
+    const requestedId = req.params.id;
+    // console.log("requestedId :>> ", requestedId);
+    db.getOtherUser(requestedId)
+        .then(({ rows }) => {
+            // adding id of the requester to the response
+            rows[0].requestingId = req.session.userId;
+            res.json({ rows });
+        })
+        .catch((err) => {
+            console.log("err in /user/:id db.getOtherUser :>> ", err);
+            res.json({ success: false });
+        });
 });
 //-------------------------------------------------------------
 
+//-------------------------------------------------------------
+app.post("/updateBio", (req, res) => {
+    // console.log("req.body :>> ", req.body);
+    const { bio } = req.body;
+    db.addBio(bio, req.session.userId)
+        .then(({ rows }) => {
+            // console.log("rows :>> ", rows);
+            res.json({ rows, bio });
+        })
+        .catch((err) => {
+            console.log("err in /updateBio db.addBio :>> ", err);
+            res.json({ success: false });
+        });
+});
+//-------------------------------------------------------------
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/register");
     return;
 });
-
 //-------------------------------------------------------------
-
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });

@@ -4,16 +4,14 @@ import axios from "axios";
 export class Uploader extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            file: null,
+        };
 
         console.log("props in Uploader: ", props);
         this.methodInUploader = this.methodInUploader.bind(this);
         this.closeUploader = this.closeUploader.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentDidMount() {
-        console.log("Uploader mounted!!!");
     }
 
     methodInUploader() {
@@ -24,14 +22,10 @@ export class Uploader extends Component {
         axios
             .post("/upload", formData)
             .then((resp) => {
+                console.log("resp in my /upload: ", resp);
                 this.props.methodInApp(resp.data.imageurl);
             })
             .catch((err) => console.log("error in axios /upöoad: ", err));
-        // this is where you'll be doing formdata to send your image to the server!!
-        // look back at ib for a nice little refresher.
-        // once the img has been successfully added to the db and you get the image back here, you'll want to send the image UP TO APP - you can do so by calling the method in App
-        // this method in App was passed down to uploader!
-        // also make sure that you hide the uploader!
     }
 
     handleChange({ target }) {
@@ -46,7 +40,7 @@ export class Uploader extends Component {
 
     render() {
         return (
-            <div className="uploader">
+            <div className="uploader_container">
                 <div className="uploader-input">
                     <input
                         type="file"

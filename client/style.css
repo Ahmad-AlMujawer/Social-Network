@@ -6,6 +6,8 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
+    margin: 0;
+    box-sizing: border-box;
 }
 section {
     display: flex;
@@ -50,13 +52,7 @@ select {
 form p {
     align-self: center;
 }
-.logo {
-    width: 200px;
-}
-.logo_container {
-    display: flex;
-    justify-content: center;
-}
+
 .toggle_btn {
     font-size: 30px;
     cursor: pointer;
@@ -64,21 +60,88 @@ form p {
     background: transparent;
 }
 .ProfilePic_container {
-    margin: 0;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .profile-pic {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
+    border-radius: 20px;
 }
 .togglemodal_container {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
     background-color: rgba(36, 36, 36, 0.74);
-    z-index: 99;
 }
 .uploader button {
+}
+
+.profile_container {
+    display: flex;
+    margin: 20px;
+    width: 100%;
+    justify-content: center;
+}
+.profile_container img {
+    border-radius: 0;
+    border: 3px dashed coral;
+    width: 1000px;
+    height: 300px;
+    object-fit: cover;
+}
+.BioEditor_container {
+}
+
+#navbar_logo {
+    background-size: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+}
+.logo {
+    width: 100px;
+    margin: auto;
+}
+.navbar_container {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    width: 100%;
+    font-size: 1.2rem;
+    margin: 0 auto;
+    padding: 0 50px;
+    color: #242423;
+}
+
+.navbar_menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.navbar_links {
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 100px;
+    /* use padding is more flex */
+    transition: all 0.4s ease;
+}
+
+.navbar {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* position: sticky; */
+    z-index: 100;
+}
+
+.navbar_links:hover {
+    color: orange;
+    transition: all 0.4s ease;
 }
