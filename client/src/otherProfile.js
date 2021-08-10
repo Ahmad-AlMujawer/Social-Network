@@ -7,10 +7,6 @@ export class otherProfile extends Component {
         this.state = {};
     }
     async componentDidMount() {
-        // here is where we want to make an axios request to 'get' info about the logged in user
-        // e.g. first name, last name, imageUrl/profilepic url
-        // the axios route '/user' is a good path for it.
-        // when we have the info from the server, add it to the state of the component using setState
         try {
             const { data } = await axios.get(
                 `/api/user/${this.props.match.params.id}`

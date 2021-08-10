@@ -24,7 +24,6 @@ export default class App extends Component {
         this.updateBioInApp = this.updateBioInApp.bind(this);
     }
 
-    // this function runs the second the component is rendered!
     componentDidMount() {
         axios
             .get("/user", this.state)
@@ -50,8 +49,6 @@ export default class App extends Component {
         });
     }
 
-    // this fn is responsible for receiving your imageurl from uploader
-    // and then storing it to its state
     methodInApp(imageurl) {
         this.setState({
             imageurl: imageurl,

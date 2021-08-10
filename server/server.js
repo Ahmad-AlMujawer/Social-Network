@@ -213,13 +213,10 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 //-------------------------------------------------------------
 app.get("/api/user/:id", (req, res) => {
-    // console.log("req.url :>> ", req.url);
-    // const requestedId = req.url.substr(10);  this is a dangerous way to choose!
     const requestedId = req.params.id;
-    // console.log("requestedId :>> ", requestedId);
+
     db.getOtherUser(requestedId)
         .then(({ rows }) => {
-            // adding id of the requester to the response
             rows[0].requestingId = req.session.userId;
             res.json({ rows });
         })
@@ -232,11 +229,9 @@ app.get("/api/user/:id", (req, res) => {
 
 //-------------------------------------------------------------
 app.post("/updateBio", (req, res) => {
-    // console.log("req.body :>> ", req.body);
     const { bio } = req.body;
     db.addBio(bio, req.session.userId)
         .then(({ rows }) => {
-            // console.log("rows :>> ", rows);
             res.json({ rows, bio });
         })
         .catch((err) => {
