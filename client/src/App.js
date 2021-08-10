@@ -62,9 +62,17 @@ export default class App extends Component {
         return (
             <BrowserRouter>
                 <div id="App_container">
+                    <div id="ProfilePic_container">
+                        <ProfilePic
+                            first={this.state.first}
+                            last={this.state.last}
+                            age={this.state.age}
+                            imageurl={this.state.imageurl}
+                        />
+                        <Logo id="navbar_logo" />
+                    </div>
                     <nav className="navbar">
                         <div className="navbar_container">
-                            <Logo id="navbar_logo" />
                             <ul className="navbar_menu">
                                 <li className="navbar_list">
                                     <a className="navbar_links" href="logout">
@@ -92,14 +100,6 @@ export default class App extends Component {
                                 methodInUploader={this.toggleModal}
                             />
                         )}
-                    </div>
-                    <div id="ProfilePic_container">
-                        <ProfilePic
-                            first={this.state.first}
-                            last={this.state.last}
-                            age={this.state.age}
-                            imageurl={this.state.imageurl}
-                        />
                     </div>
 
                     <Route

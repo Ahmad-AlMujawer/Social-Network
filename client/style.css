@@ -1,147 +1,17 @@
-/* #A14C3F;
- #FFF9E4; */
-
-body {
-    background-image: url("/mandala-illustration_53876-81805.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-    margin: 0;
-    box-sizing: border-box;
+.logo {
+    width: 100px;
+    height: 100px;
 }
-section {
-    display: flex;
-    justify-content: center;
-}
-.input_box {
-    background-color: aquamarine;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 40vw;
-    background: linear-gradient(120deg, #a14d35, transparent);
-    height: 60vh;
-    border-radius: 20px;
-}
-input {
-    padding: 8px;
-    margin: 5px 12px;
-}
-button {
-    width: 30%;
-    padding: 5px;
-    align-self: center;
-    cursor: pointer;
-}
-.username {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.birthday {
-    display: flex;
-    justify-content: space-between;
-}
-select {
-    padding: 10px;
-    margin: 5px 20px;
-
-    border: none;
-    background: aquamarine;
-}
-form p {
-    align-self: center;
-}
-
-.toggle_btn {
-    font-size: 30px;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-}
-.ProfilePic_container {
-    display: flex;
-    justify-content: flex-end;
-}
-
 .profile-pic {
-    width: 180px;
-    height: 180px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    border-radius: 20px;
-}
-.togglemodal_container {
-    background-color: rgba(36, 36, 36, 0.74);
-}
-.uploader button {
-}
-
-.profile_container {
-    display: flex;
-    margin: 20px;
-    width: 100%;
-    justify-content: center;
+    float: right;
 }
 .profile_container img {
-    border-radius: 0;
-    border: 3px dashed coral;
     width: 1000px;
     height: 300px;
     object-fit: cover;
-}
-.BioEditor_container {
-}
-
-#navbar_logo {
-    background-size: 100%;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 2rem;
-}
-.logo {
-    width: 100px;
-    margin: auto;
-}
-.navbar_container {
-    display: flex;
-    justify-content: space-between;
-    height: 80px;
-    width: 100%;
-    font-size: 1.2rem;
-    margin: 0 auto;
-    padding: 0 50px;
-    color: #242423;
-}
-
-.navbar_menu {
-    display: flex;
-    align-items: center;
-    list-style: none;
-}
-
-.navbar_links {
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    width: 100px;
-    /* use padding is more flex */
-    transition: all 0.4s ease;
-}
-
-.navbar {
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* position: sticky; */
-    z-index: 100;
-}
-
-.navbar_links:hover {
-    color: orange;
-    transition: all 0.4s ease;
+    border: 2px dashed crimson;
+    margin: 20px;
 }
