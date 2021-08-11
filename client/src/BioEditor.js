@@ -57,7 +57,7 @@ export class BioEditor extends Component {
                     <button
                         onClick={() => this.setState({ editorIsVisible: true })}
                     >
-                        Edit Bio 📝
+                        📝
                     </button>
                 </div>
             );

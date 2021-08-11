@@ -60,12 +60,22 @@ export class Login extends Component {
                         onChange={this.handleChange}
                         required
                     />
-                    <button onClick={(e) => this.handleSubmit(e)}>Login</button>
-                    <p>
-                        Not a registered?
-                        <Link to="/">register here.</Link>
-                    </p>
-                    <Link to="/rest-password">forgot your password?</Link>
+                    <div className="login_btns">
+                        <button
+                            onClick={(e) => this.handleSubmit(e)}
+                            className="btn_0"
+                        >
+                            Login
+                        </button>
+
+                        <Link to="/rest-password">
+                            {" "}
+                            ▶️forgot your password?
+                        </Link>
+                        <button className="btn_1">
+                            <Link to="/">sign up here</Link>
+                        </button>
+                    </div>
                 </div>
             </section>
         );

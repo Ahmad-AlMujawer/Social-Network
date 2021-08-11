@@ -80,28 +80,24 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                         required
                     />
-                    <div className="birthday">
-                        <input
-                            type="date"
-                            id="birthday"
-                            name="age"
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <select name="gender">
-                            <option defaultValue>Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Divers">Divers</option>
-                        </select>
-                    </div>
+
+                    <input
+                        type="number"
+                        name="age"
+                        min="14"
+                        max="120"
+                        placeholder="Age"
+                        onChange={this.handleChange}
+                        required
+                    />
 
                     <button onClick={(e) => this.handleSubmit(e)}>
                         Signup
                     </button>
-                    <p>
-                        Already registered? <Link to="/login">login</Link>
-                    </p>
+                    <p>Already registered?</p>
+                    <button className="btn_0">
+                        <Link to="/login">login</Link>
+                    </button>
                 </form>
             </section>
         );

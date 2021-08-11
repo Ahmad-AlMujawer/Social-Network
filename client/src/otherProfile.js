@@ -32,13 +32,13 @@ export class otherProfile extends Component {
     }
     render() {
         return (
-            <div className="otherProfile_container">
+            <div className="profile_container otherProfile">
                 <img
                     src={this.state.imageurl || "/default.jpg"}
                     alt={`${this.state.first} ${this.state.last}`}
                 />
 
-                <div>
+                <div className="BioEditor_container">
                     <h2>
                         {this.state.first} {this.state.last}
                     </h2>
