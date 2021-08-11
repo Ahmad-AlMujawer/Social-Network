@@ -7,6 +7,7 @@ import { Profile } from "./Profile";
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 import { otherProfile } from "./otherProfile.js";
+import { FindPeople } from "./FindPeople";
 
 export default class App extends Component {
     constructor() {
@@ -84,6 +85,11 @@ export default class App extends Component {
                                         Profile
                                     </Link>
                                 </li>
+                                <li className="navbar_list">
+                                    <Link to="/users" className="navbar_links">
+                                        Find People
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </nav>
@@ -120,6 +126,7 @@ export default class App extends Component {
                         )}
                     />
                     <Route path="/user/:id" component={otherProfile} />
+                    <Route path="/users" component={FindPeople} />
                 </div>
             </BrowserRouter>
         );

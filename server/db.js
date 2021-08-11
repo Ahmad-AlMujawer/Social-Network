@@ -69,4 +69,16 @@ module.exports.addBio = (bio, id) => {
         [bio, id]
     );
 };
-//-----------------------------------------------------------------------------------
+//---------------------------search users-----------------------------------------
+module.exports.getRecentUsers = () => {
+    return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 3`);
+};
+
+module.exports.getMatchingUsers = (val) => {
+    return db.query(
+        `SELECT * FROM users 
+        WHERE (first || ' ' || last) ILIKE $1`,
+        [val + "%"]
+    );
+};
+//---------------------------search users-----------------------------------------

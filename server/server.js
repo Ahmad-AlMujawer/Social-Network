@@ -198,6 +198,20 @@ app.get("/user", (req, res) => {
             res.json({ success: false });
         });
 });
+//-------------------------------------------------------------
+app.get("/api/user/:id", (req, res) => {
+    const requestedId = req.params.id;
+
+    db.getOtherUser(requestedId)
+        .then(({ rows }) => {
+            rows[0].requestingId = req.session.userId;
+            res.json({ rows });
+        })
+        .catch((err) => {
+            console.log("err in /user/:id db.getOtherUser ", err);
+            res.json({ success: false });
+        });
+});
 
 //------------------------Uploader-------------------------------------
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
@@ -211,23 +225,8 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             res.json({ success: false });
         });
 });
-//-------------------------------------------------------------
-app.get("/api/user/:id", (req, res) => {
-    const requestedId = req.params.id;
 
-    db.getOtherUser(requestedId)
-        .then(({ rows }) => {
-            rows[0].requestingId = req.session.userId;
-            res.json({ rows });
-        })
-        .catch((err) => {
-            console.log("err in /user/:id db.getOtherUser :>> ", err);
-            res.json({ success: false });
-        });
-});
-//-------------------------------------------------------------
-
-//-------------------------------------------------------------
+//--------------------------ADD BIO-----------------------------------
 app.post("/updateBio", (req, res) => {
     const { bio } = req.body;
     db.addBio(bio, req.session.userId)
@@ -238,6 +237,31 @@ app.post("/updateBio", (req, res) => {
             console.log("err in /updateBio db.addBio :>> ", err);
             res.json({ success: false });
         });
+});
+//----------------------Find People---------------------------------------
+app.get("/api/findPeople/:name", async (req, res) => {
+    if (req.params.name === "name") {
+        try {
+            const { rows } = await db.getRecentUsers();
+            res.json(rows);
+            console.log("rows in getRecentUsers: ", rows);
+        } catch (err) {
+            console.log("error in /findPeople db.getRecentUsers: ", err);
+            res.json({ success: false });
+        }
+    } else {
+        try {
+            const { rows } = await db.getMatchingUsers(req.params.name);
+            console.log("rows in db.getMatchingusers: ", rows);
+            res.json(rows);
+        } catch (err) {
+            console.log(
+                "error in /findPeople/:name db.getMatchingusers: ",
+                err
+            );
+            res.json({ success: false });
+        }
+    }
 });
 //-------------------------------------------------------------
 app.get("/logout", (req, res) => {
