@@ -20,7 +20,7 @@ export function FindPeople() {
                     }
                 } else {
                     const { data } = await axios.get(`/api/findPeople/name`);
-                    console.log("data in /findPeople/name Recentusers: ", data);
+                    console.log("data in /findPeople/name : ", data);
 
                     if (!abort) {
                         setUsers(data);
@@ -39,7 +39,7 @@ export function FindPeople() {
         };
     }, [searchTerm]);
     return (
-        <div>
+        <div className="findPeople_container">
             <input
                 name="searchuser"
                 defaultValue={searchTerm}

@@ -11,7 +11,7 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const ses = require("./ses.js");
 
-//-----------------------------------------------------------
+//---------------------------------------------------------------------------------
 
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -30,14 +30,14 @@ const uploader = multer({
         fileSize: 2097152,
     },
 });
-//-------------------------------------------------------------
+//---------------------------------------------------------------------------------
 let sessionSecret;
 if (process.env.NODE_ENV == "production") {
     sessionSecret = process.env.SESSION_SECRET;
 } else {
     sessionSecret = require("../secrets.json").SESSION_SECRET;
 }
-//-----------------------------------------------------------
+//---------------------------------------------------------------------------------
 app.use(
     cookieSession({
         secret: `${sessionSecret}`,
@@ -57,7 +57,7 @@ app.get("/user/id.json", function (req, res) {
         userId: req.session.userId,
     });
 });
-//-----------------------------register--------------------------------
+//-----------------------------register--------------------------------------------
 app.post("/register", (req, res) => {
     const { first, last, email, password } = req.body;
 
@@ -81,7 +81,7 @@ app.post("/register", (req, res) => {
             res.json({ error: true });
         });
 });
-//----------------------------login---------------------------------
+//----------------------------login-------------------------------------------------
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     // console.log("req.body in login: ", req.body);
@@ -113,7 +113,7 @@ app.post("/login", (req, res) => {
             res.json({ error: true });
         });
 });
-//-----------------------------password-reset--------------------------------
+//-----------------------------password-reset--------------------------------------
 app.post("/password/reset/start", (req, res) => {
     const { email } = req.body;
     db.getLoginInfo(email).then((data) => {
@@ -155,7 +155,7 @@ app.post("/password/reset/start", (req, res) => {
     });
 });
 
-//-----------------------password-verify-----------------------
+//-----------------------password-verify---------------------------------------------
 app.post("/password/reset/verify", (req, res) => {
     db.verifyCode(req.body.email)
         .then(() => {
@@ -187,7 +187,7 @@ app.post("/password/reset/verify", (req, res) => {
         });
 });
 
-//------------------GET user---------------------------------
+//------------------GET user----------------------------------------------------------
 app.get("/user", (req, res) => {
     db.getUser(req.session.userId)
         .then((data) => {
@@ -198,7 +198,7 @@ app.get("/user", (req, res) => {
             res.json({ success: false });
         });
 });
-//-------------------------------------------------------------
+//--------------------------------------
 app.get("/api/user/:id", (req, res) => {
     const requestedId = req.params.id;
 
@@ -213,7 +213,7 @@ app.get("/api/user/:id", (req, res) => {
         });
 });
 
-//------------------------Uploader-------------------------------------
+//------------------------Uploader-----------------------------------------------------
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
     db.addProfilePic(url, req.session.userId)
@@ -226,7 +226,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         });
 });
 
-//--------------------------ADD BIO-----------------------------------
+//--------------------------ADD BIO------------------------------------------------------
 app.post("/updateBio", (req, res) => {
     const { bio } = req.body;
     db.addBio(bio, req.session.userId)
@@ -238,7 +238,7 @@ app.post("/updateBio", (req, res) => {
             res.json({ success: false });
         });
 });
-//----------------------Find People---------------------------------------
+//----------------------Find People-------------------------------------------------------
 app.get("/api/findPeople/:name", async (req, res) => {
     if (req.params.name === "name") {
         try {
@@ -263,7 +263,34 @@ app.get("/api/findPeople/:name", async (req, res) => {
         }
     }
 });
-//-------------------------------------------------------------
+//------------------------------Friendship---------------------------------------------------
+app.get("/checkFriendStatus/:id", async (req, res) => {
+    const userId = req.session.userId;
+    const otherUserId = req.params.id;
+    console.log("userId in checkstatus: ", userId);
+    console.log("otherUserId in checkstatus: ", otherUserId);
+    try {
+        const { rows } = await db.checkFriendStatus(userId, otherUserId);
+        console.log("rows in checkstatus: ", rows);
+        if (!rows.length) {
+            res.json({ buttonText: "Send Friend Request" });
+        } else if (rows[0].accepted) {
+            res.json({ buttonText: "Unfriend" });
+        } else if (!rows[0].accepted) {
+            if (rows[0].sender_id === userId) {
+                res.json({ buttonText: "Cancel Friend Request" });
+            } else {
+                res.json({ buttonText: "Accept Friend Request" });
+            }
+        }
+    } catch (err) {
+        console.log("error in /checkFriendStatus db.checkFriendStatus: ", err);
+        res.json({ success: false });
+    }
+});
+//----------------------
+app.post("", async (req, res) => {});
+//---------------------------------------------------------------------------------
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/register");
