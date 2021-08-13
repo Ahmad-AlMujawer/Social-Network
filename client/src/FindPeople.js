@@ -13,14 +13,17 @@ export function FindPeople() {
                     const { data } = await axios.get(
                         `api/findPeople/${searchTerm}`
                     );
-                    console.log("data in /findPeople recent: ", data);
+                    console.log(
+                        "data in /findPeople we're looking for: ",
+                        data
+                    );
 
                     if (!abort) {
                         setUsers(data);
                     }
                 } else {
                     const { data } = await axios.get(`/api/findPeople/name`);
-                    console.log("data in /findPeople/name : ", data);
+                    console.log("data in /findPeople/name Recentusers: ", data);
 
                     if (!abort) {
                         setUsers(data);

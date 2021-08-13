@@ -289,7 +289,38 @@ app.get("/checkFriendStatus/:id", async (req, res) => {
     }
 });
 //----------------------
-app.post("", async (req, res) => {});
+app.post("/api/friends/:id", async (req, res) => {
+    const buttonStatus = req.body.buttonText;
+    const userId = req.session.userId;
+    const otherUserId = req.params.id;
+
+    if (buttonStatus === "Send Friend Request") {
+        try {
+            const { data } = await db.sendFriendRequest(userId, otherUserId);
+            res.json({
+                otherUserId: data.recipient_id,
+                buttonText: "Cancel Friend Request",
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    } else if (buttonStatus === "Unfriend") {
+        try {
+        } catch (err) {
+            console.log(err);
+        }
+    } else if (buttonStatus === "Cancel Friend Request") {
+        try {
+        } catch (err) {
+            console.log(err);
+        }
+    } else if (buttonStatus === "Accept Friend Request") {
+        try {
+        } catch (err) {
+            console.log(err);
+        }
+    }
+});
 //---------------------------------------------------------------------------------
 app.get("/logout", (req, res) => {
     req.session = null;
