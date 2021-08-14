@@ -13,21 +13,18 @@ export function FindPeople() {
                     const { data } = await axios.get(
                         `api/findPeople/${searchTerm}`
                     );
-                    console.log(
-                        "data in /findPeople we're looking for: ",
-                        data
-                    );
-
-                    if (!abort) {
-                        setUsers(data);
-                    }
+                    // console.log(
+                    //     "data in /findPeople we're looking for: ",
+                    //     data
+                    // );
+                    setUsers(data);
                 } else {
                     const { data } = await axios.get(`/api/findPeople/name`);
-                    console.log("data in /findPeople/name Recentusers: ", data);
+                    // console.log("data in /findPeople/name Recentusers: ", data);
 
                     if (!abort) {
                         setUsers(data);
-                        console.log("im seeing !abort", abort);
+                        // console.log("im seeing !abort", abort);
                     }
                 }
             } catch (err) {
@@ -36,13 +33,14 @@ export function FindPeople() {
             }
         })();
         return () => {
-            console.log("searchTerm in my return fn: ", searchTerm);
-            console.log("abort in my return fn: ", abort);
+            // console.log("searchTerm in my return fn: ", searchTerm);
+            // console.log("abort in my return fn: ", abort);
             abort = true;
         };
     }, [searchTerm]);
     return (
         <div className="findPeople_container">
+            <h1>I can see content in finde People</h1>
             <input
                 name="searchuser"
                 defaultValue={searchTerm}
@@ -53,17 +51,18 @@ export function FindPeople() {
                 }}
             />
 
-            {users.map((user, index) => {
-                <div key={(user.id, index)}>
-                    <img
-                        src={user.imageurl || "/default.jpg"}
-                        alt={`${user.first} ${user.last}`}
-                    />
-                    <p>
-                        {user.first} {user.last}
-                    </p>
-                </div>;
-            })}
+            {users.length &&
+                users.map((user) => (
+                    <div key={user.id}>
+                        <img
+                            src={user.imageurl || "/default.jpg"}
+                            alt={`${user.first} ${user.last}`}
+                        />
+                        <p>
+                            {user.first} {user.last}
+                        </p>
+                    </div>
+                ))}
         </div>
     );
 }

@@ -88,38 +88,39 @@ module.exports.getMatchingUsers = (val) => {
 
 //---------------------------Friendship Query----------------------------------------
 
-module.exports.checkFriendStatus = (recipient_id, sender_id) => {
+module.exports.checkFriendStatus = (userId, otherUserId) => {
+    console.log("getting checkFriendStatus from db");
     return db.query(
         `SELECT * FROM friendships
          WHERE (recipient_id = $1 AND sender_id = $2)
-         OR (recipient_id = $2 AND sender_id = $1);`,
-        [recipient_id, sender_id]
+         OR (recipient_id = $2 AND sender_id = $1)`,
+        [userId, otherUserId]
     );
 };
 //---------------------------
-module.exports.sendFriendRequest = (recipient_id, sender_id) => {
+module.exports.sendFriendRequest = (userId, otherUserId) => {
     return db.query(
-        `INSERT INTO friendships (recipient_id, sender_id)
-         VALUES ($1, $2);`,
-        [recipient_id, sender_id]
+        `INSERT INTO friendships (sender_id, recipient_id)
+         VALUES ($1, $2)`,
+        [userId, otherUserId]
     );
 };
 //---------------------------
-module.exports.acceptFriendRequest = (recipient_id, sender_id) => {
+module.exports.acceptFriendRequest = (userId, otherUserId) => {
     return db.query(
-        `UPDATE friendships SET accept = true
+        `UPDATE friendships SET accepted = true
          WHERE (recipient_id = $1 AND sender_id = $2)
-        OR (recipient_id = $2 AND sender_id = $1);`,
-        [recipient_id, sender_id]
+        OR (recipient_id = $2 AND sender_id = $1)`,
+        [userId, otherUserId]
     );
 };
 //---------------------------
-module.exports.cancel_deleteFriendRequest = (recipient_id, sender_id) => {
+module.exports.cancel_deleteFriendRequest = (userId, otherUserId) => {
     return db.query(
         `DELETE FROM friendships
          WHERE (recipient_id = $1 AND sender_id = $2)
-         OR (recipient_id = $2 AND sender_id = $1);`,
-        [recipient_id, sender_id]
+         OR (recipient_id = $2 AND sender_id = $1)`,
+        [userId, otherUserId]
     );
 };
 //--------------------------------------------------------------------------------------
