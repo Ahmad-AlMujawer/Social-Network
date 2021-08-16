@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
 import axios from "axios";
-import App from "./App";
 import { Provider } from "react-redux";
+import App from "./App";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import * as immutableState from "redux-immutable-state-invariant";

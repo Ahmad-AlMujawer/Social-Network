@@ -40,7 +40,7 @@ export class Uploader extends Component {
 
     render() {
         return (
-            <div className="uploader_container">
+            <div id="uploader_container">
                 <div className="uploader-input">
                     <input
                         type="file"

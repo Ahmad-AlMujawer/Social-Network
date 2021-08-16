@@ -11,26 +11,28 @@ export function Profile({
 }) {
     imageurl = imageurl || "default.png";
     return (
-        <div className="Profile_container">
-            <div className="ProfilePic_container">
-                <ProfilePic
-                    first={first}
-                    last={last}
-                    imageurl={imageurl}
-                    toggleModal={() => toggleModal()}
-                />
+        <>
+            <div id="profile_container">
+                <div className="profile_container_pic">
+                    <ProfilePic
+                        first={first}
+                        last={last}
+                        imageurl={imageurl}
+                        toggleModal={() => toggleModal()}
+                    />
+                </div>
+
+                <div className="profile_container_bio">
+                    <h3>Bio:</h3>
+                    <BioEditor
+                        first={first}
+                        last={last}
+                        bio={bio}
+                        updateBioInApp={updateBioInApp}
+                    />
+                </div>
             </div>
-            <div className="BioEditor_container">
-                <h3>
-                    {first} {last}
-                </h3>
-                <BioEditor
-                    first={first}
-                    last={last}
-                    bio={bio}
-                    updateBioInApp={updateBioInApp}
-                />
-            </div>
-        </div>
+            <h3 className="name">{first}</h3>
+        </>
     );
 }

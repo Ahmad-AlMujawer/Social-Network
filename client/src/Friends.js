@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FriendButton } from "./FriendButton";
 import axios from "axios";
+import { ProfilePic } from "./ProfilePic";
+import { Link } from "react-router-dom";
+
 import {
     receiveFriendsAndWannabees,
     acceptFriendRequest,
@@ -41,30 +44,42 @@ export function Friends() {
         <div>
             <h2>Friends</h2>
 
-            <div>
+            <div className="friends_list">
                 {friends &&
                     friends.map((friend) => (
-                        <div key={friend.id}>
-                            <img
-                                src={friend.imageurl || "/default.jpg"}
-                                alt={`${friend.first} ${friend.last}`}
-                            />
-                            <p>
-                                {friend.first} {friend.last}
-                            </p>
-                            <button
-                                onClick={() => dispatch(unfriend(friend.id))}
-                            >
-                                unfriend
-                            </button>
+                        <div key={friend.id} className="friends_box">
+                            {/* <Comonent key={friend.id} {...friend} /> */}
+                            <Link to={"/user/" + friend.id}>
+                                {/* <img
+                                    src={friend.imageurl}
+                                    className="friends_img"
+                                /> */}
+                                <ProfilePic
+                                    first={friend.first}
+                                    last={friend.last}
+                                    imageurl={friend.imageurl || "/default.jpg"}
+                                />
+                                <p>
+                                    {friend.first} {friend.last}
+                                </p>
+                            </Link>
+                            <div>
+                                <button
+                                    onClick={() =>
+                                        dispatch(unfriend(friend.id))
+                                    }
+                                >
+                                    unfriend
+                                </button>
+                            </div>
                         </div>
                     ))}
-                {/* {friends.length == 0 && <p>you dont have any friends yet</p>} */}
             </div>
-            <div>
+            <div className="friends_list">
+                <h2>Wannabees</h2>
                 {wannabees &&
                     wannabees.map((wannabe) => (
-                        <div key={wannabe.id}>
+                        <div key={wannabe.id} className="friends_box">
                             <img
                                 src={wannabe.imageurl || "/default.jpg"}
                                 alt={`${wannabe.first} ${wannabe.last}`}
@@ -81,7 +96,6 @@ export function Friends() {
                             </button>
                         </div>
                     ))}
-                {/* {wannabees.length == 0 && <p>there is no friend requests</p>} */}
             </div>
         </div>
     );

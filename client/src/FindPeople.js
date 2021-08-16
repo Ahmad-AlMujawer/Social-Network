@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { ProfilePic } from "./ProfilePic";
 
 export function FindPeople() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -40,7 +42,7 @@ export function FindPeople() {
     }, [searchTerm]);
     return (
         <div className="findPeople_container">
-            <h1>I can see content in finde People</h1>
+            <h1> find new friends</h1>
             <input
                 name="searchuser"
                 defaultValue={searchTerm}
@@ -50,19 +52,24 @@ export function FindPeople() {
                     setSearchTerm(target.value);
                 }}
             />
-
-            {users.length &&
-                users.map((user) => (
-                    <div key={user.id}>
-                        <img
-                            src={user.imageurl || "/default.jpg"}
-                            alt={`${user.first} ${user.last}`}
-                        />
-                        <p>
-                            {user.first} {user.last}
-                        </p>
-                    </div>
-                ))}
+            <div className="search_results">
+                {users.length &&
+                    users.map((user) => (
+                        <div key={user.id} className="user_box">
+                            <Link to={"/user/" + user.id}>
+                                <ProfilePic
+                                    first={user.first}
+                                    last={user.last}
+                                    imageurl={user.imageurl || "/default.jpg"}
+                                />
+                                <p>
+                                    {user.first} {user.last}
+                                </p>
+                            </Link>
+                        </div>
+                    ))}
+                {!users.length && <h3 id="no_results">No Results</h3>}
+            </div>
         </div>
     );
 }

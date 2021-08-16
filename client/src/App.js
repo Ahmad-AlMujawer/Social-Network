@@ -64,18 +64,19 @@ export default class App extends Component {
         return (
             <BrowserRouter>
                 <div id="App_container">
-                    <div id="ProfilePic_container">
+                    <div id="header_component">
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}
                             age={this.state.age}
                             imageurl={this.state.imageurl}
                         />
-                        <Logo id="navbar_logo" />
+                        <Logo id="logo" />
                     </div>
-                    <nav className="navbar">
-                        <div className="navbar_container">
-                            <ul className="navbar_menu">
+
+                    <nav id="navbar">
+                        <ul className="navbar_ul">
+                            <div className="nav_left">
                                 <li className="navbar_list">
                                     <a className="navbar_links" href="logout">
                                         Logout
@@ -87,16 +88,32 @@ export default class App extends Component {
                                     </Link>
                                 </li>
                                 <li className="navbar_list">
-                                    <Link to="/users" className="navbar_links">
-                                        Find People
+                                    <a href="/users" className="navbar_links">
+                                        Find Friends
+                                    </a>
+                                </li>
+                            </div>
+                            <div className="nav_right">
+                                <li className="navbar_list">
+                                    <Link
+                                        to="/friends"
+                                        className="navbar_links"
+                                    >
+                                        Friends
                                     </Link>
                                 </li>
-                            </ul>
-                        </div>
+                                <li className="navbar_list">
+                                    <a href="/" className="navbar_links">
+                                        Chat
+                                    </a>
+                                </li>
+                            </div>
+                        </ul>
                     </nav>
+
                     <div id="togglemodal_container">
                         <button
-                            className="toggle_btn"
+                            className="upload_btn"
                             onClick={this.toggleModal}
                         >
                             📷
@@ -113,7 +130,7 @@ export default class App extends Component {
                         exact
                         path="/"
                         render={() => (
-                            <div className="profile_container">
+                            <div id="profile_container">
                                 <Profile
                                     id={this.state.id}
                                     first={this.state.first}
@@ -126,6 +143,7 @@ export default class App extends Component {
                             </div>
                         )}
                     />
+
                     <Route path="/user/:id" component={otherProfile} />
                     <Route path="/users" component={FindPeople} />
                     <Route path="/friends" component={Friends} />
