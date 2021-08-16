@@ -124,3 +124,16 @@ module.exports.cancel_deleteFriendRequest = (userId, otherUserId) => {
     );
 };
 //--------------------------------------------------------------------------------------
+module.exports.friendsAndWannabees = (id) => {
+    return db.query(
+        `SELECT users.id, first, last, imageurl, accepted 
+         FROM friendships JOIN users on
+                        (accepted = FALSE AND recipient_id = $1 AND sender_id = users.id)
+                    OR  (accepted = TRUE AND recipient_id = $1 AND sender_id = users.id)
+                    OR  (accepted = TRUE AND sender_id = $1 AND recipient_id = users.id)
+    
+    `,
+        [id]
+    );
+};
+//--------------------------------------------------------------------------------------

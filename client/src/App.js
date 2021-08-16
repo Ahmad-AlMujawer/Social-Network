@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 import { otherProfile } from "./otherProfile.js";
 import { FindPeople } from "./FindPeople";
+import { Friends } from "./Friends";
 
 export default class App extends Component {
     constructor() {
@@ -127,6 +128,7 @@ export default class App extends Component {
                     />
                     <Route path="/user/:id" component={otherProfile} />
                     <Route path="/users" component={FindPeople} />
+                    <Route path="/friends" component={Friends} />
                 </div>
             </BrowserRouter>
         );

@@ -11,6 +11,17 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const ses = require("./ses.js");
 
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
+
+app.get("/", function (req, res) {
+    // just a normal route
+    res.sendStatus(200);
+});
+
 //---------------------------------------------------------------------------------
 
 const diskStorage = multer.diskStorage({
@@ -332,7 +343,19 @@ app.post("/friendship/:id", async (req, res) => {
         }
     }
 });
-// //---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+app.get("/friends-and-wanabees", async (req, res) => {
+    console.log("GET req to /friends-and-wanabees has been made!");
+    const { rows } = await db
+        .friendsAndWannabees(req.session.userId)
+        .catch((err) => {
+            console.log("error in db.getFriendsList: ", err);
+            res.json({ success: false });
+        });
+    console.log("rows in friends-and-wannabees: ", rows);
+    res.json(rows);
+});
+//---------------------------------------------------------------------------------
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/register");
@@ -343,6 +366,6 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening on port 3001.");
 });
