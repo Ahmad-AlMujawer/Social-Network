@@ -63,52 +63,65 @@ export class RestPassword extends Component {
         if (this.state.view === 1) {
             return (
                 <div>
-                    <div className="input_box">
+                    <div className="login_container">
                         {this.state.error && (
-                            <h2 style={{ color: "red" }}>
+                            <h3 style={{ color: "tomato" }}>
                                 {this.state.error} Somthing went wrong!! Please
-                                try it nochmal 😄
-                            </h2>
+                                again 😄
+                            </h3>
                         )}
-                        <input
-                            name="email"
-                            placeholder="your email adress"
-                            onChange={this.handleChange}
-                        />
-                        <button onClick={this.handleSubmit}>Submit</button>
-                        <button>
-                            <Link to="/login">Cancel</Link>
-                        </button>
+                        <div className="input_login">
+                            <input
+                                name="email"
+                                placeholder="your email adress"
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className="pwReset">
+                            <button onClick={this.handleSubmit}>Submit</button>
+                            <button>
+                                <Link to="/login">Cancel</Link>
+                            </button>
+                        </div>
                     </div>
                 </div>
             );
         } else if (this.state.view === 2) {
             return (
-                <div className="input_box">
+                <div className="login_container">
                     {this.state.error && (
                         <h3 style={{ color: "red" }}>
                             Somthing went wrong!! Please try it nochmal 😄
                         </h3>
                     )}
-                    <p>
+                    <h3 style={{ color: "red" }}>
                         an email with a 6 digit verification code has been sent
                         to your email adress. Please enter this code belwo.
-                    </p>
-                    <input
-                        name="code"
-                        placeholder="6-digit code"
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="new password"
-                        onChange={this.handleChange}
-                    />
-                    <button onClick={this.handleSubmit}>Verify</button>
-                    <button>
-                        <Link to="/login">Cancel</Link>
-                    </button>
+                    </h3>
+                    <div className="input_login">
+                        <input
+                            name="code"
+                            placeholder="6-digit code"
+                            onChange={this.handleChange}
+                        />
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="new password"
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div
+                        className="pwReset"
+                        style={{
+                            bottom: "25%",
+                        }}
+                    >
+                        <button onClick={this.handleSubmit}>Verify</button>
+                        <button>
+                            <Link to="/login">Cancel</Link>
+                        </button>
+                    </div>
                 </div>
             );
         } else if (this.state.view === 3) {
@@ -117,7 +130,9 @@ export class RestPassword extends Component {
                 <div>
                     <h1>
                         You have successfully reset your password.{" "}
-                        <Link to="/login">login</Link>
+                        <button>
+                            <Link to="/login">login</Link>
+                        </button>
                     </h1>
                 </div>
             );

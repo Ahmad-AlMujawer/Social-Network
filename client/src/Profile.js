@@ -23,8 +23,8 @@ export function Profile({
                 </div>
 
                 <div className="profile_container_bio">
-                    <h3>Bio:</h3>
                     <BioEditor
+                        defaultValue={bio}
                         first={first}
                         last={last}
                         bio={bio}

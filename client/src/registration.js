@@ -46,14 +46,14 @@ export class Registration extends Component {
     render() {
         return (
             <section>
-                <form className="input_box">
+                <form className="regisration_container">
                     {this.state.error && (
                         <h3 style={{ color: "aquamarine" }}>
                             {this.state.error} Somthing went wrong!! Please try
                             it nochmal 😄
                         </h3>
                     )}
-                    <div className="username">
+                    <div className="input_register">
                         <input
                             name="first"
                             placeholder="First Name"
@@ -66,38 +66,44 @@ export class Registration extends Component {
                             onChange={this.handleChange}
                             required
                         />
+
+                        <input
+                            name="email"
+                            placeholder="Email"
+                            onChange={this.handleChange}
+                            required
+                        />
+                        <input
+                            name="password"
+                            placeholder="Password"
+                            type="password"
+                            onChange={this.handleChange}
+                            required
+                        />
+
+                        <input
+                            type="number"
+                            name="age"
+                            min="14"
+                            max="120"
+                            placeholder="Age"
+                            onChange={this.handleChange}
+                            required
+                        />
                     </div>
-                    <input
-                        name="email"
-                        placeholder="Email"
-                        onChange={this.handleChange}
-                        required
-                    />
-                    <input
-                        name="password"
-                        placeholder="Password"
-                        type="password"
-                        onChange={this.handleChange}
-                        required
-                    />
-
-                    <input
-                        type="number"
-                        name="age"
-                        min="14"
-                        max="120"
-                        placeholder="Age"
-                        onChange={this.handleChange}
-                        required
-                    />
-
-                    <button onClick={(e) => this.handleSubmit(e)}>
-                        Signup
-                    </button>
-                    <p>Already registered?</p>
-                    <button className="btn_0">
-                        <Link to="/login">login</Link>
-                    </button>
+                    <div className="btns_register">
+                        <button
+                            onClick={(e) => this.handleSubmit(e)}
+                            
+                        >
+                            Signup
+                        </button>
+                        <br />
+                        <p className="p_0">Already registered?</p>
+                        <button className="btn_0">
+                            <Link to="/login">login</Link>
+                        </button>
+                    </div>
                 </form>
             </section>
         );

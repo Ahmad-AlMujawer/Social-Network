@@ -38,15 +38,16 @@ export class BioEditor extends Component {
 
     render() {
         if (this.state.editorIsVisible) {
-           
             return (
                 <div className="BioEditor">
                     <textarea
+                        cols="30"
+                        rows="4"
                         name="bio"
                         defaultValue={this.props.bio}
                         onChange={this.handleChange}
                     />
-                    <button onClick={this.updateBio}>Update Bio </button>
+                    <button onClick={this.updateBio}>📝 </button>
                 </div>
             );
         } else

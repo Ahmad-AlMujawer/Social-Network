@@ -40,41 +40,45 @@ export class Login extends Component {
     }
     render() {
         return (
-            <section>
-                {this.state.error && (
-                    <h2 style={{ color: "red" }}>
-                        Somthing went wrong!! Please try it nochmal 😄
-                    </h2>
-                )}
-                <div className="input_box">
-                    <input
-                        name="email"
-                        placeholder="Email"
-                        onChange={this.handleChange}
-                        required
-                    />
-                    <input
-                        name="password"
-                        placeholder="Password"
-                        type="password"
-                        onChange={this.handleChange}
-                        required
-                    />
+            <section className="login_fadein">
+                <div className="login_container">
+                    {this.state.error && (
+                        <h3 style={{ color: "tomato" }}>
+                            Somthing went wrong!! Please try again 😄
+                        </h3>
+                    )}
+                    <div className="input_login">
+                        <input
+                            name="email"
+                            placeholder="Email"
+                            onChange={this.handleChange}
+                            required
+                        />
+                        <input
+                            name="password"
+                            placeholder="Password"
+                            type="password"
+                            onChange={this.handleChange}
+                            required
+                        />
+                    </div>
                     <div className="login_btns">
-                        <button
-                            onClick={(e) => this.handleSubmit(e)}
-                            className="btn_0"
-                        >
-                            Login
-                        </button>
-
-                        <Link to="/rest-password">
-                            {" "}
-                            ▶️forgot your password?
-                        </Link>
-                        <button className="btn_1">
-                            <Link to="/">sign up here</Link>
-                        </button>
+                        <div>
+                            <button
+                                onClick={(e) => this.handleSubmit(e)}
+                                className="btn-"
+                            >
+                                Login
+                            </button>
+                            <button className="btn_0">
+                                <Link to="/">sign up</Link>
+                            </button>
+                        </div>
+                        <div className="login-div2">
+                            <Link to="/rest-password">
+                                ▶️ forgot your password?
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>

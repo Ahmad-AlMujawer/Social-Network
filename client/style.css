@@ -1,14 +1,112 @@
 body {
-    background: #fff;
+    background: linear-gradient(to left, teal, lightsalmon);
 }
-input {
-    padding: 5px;
-    background: #ccc;
-    margin: 10px;
+.regisration_container,
+.login_fadein {
+    animation: fadeIn ease 5s;
 }
 
-.btn {
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.regisration_container {
+    position: relative;
+    border-radius: 5px;
+    width: 600px;
+    height: 400px;
+    background: rgb(20, 20, 20, 0.7);
+
+    left: 25%;
+    z-index: 1;
+}
+.input_register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+
+    left: 39%;
+}
+.login_container {
+    position: relative;
+    border-radius: 5px;
+    width: 600px;
+    height: 400px;
+    background: rgb(20, 20, 20, 0.7);
+    left: 25%;
+    z-index: 1;
+}
+.input_login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 36%;
+    top: 35%;
+}
+.input_register input {
+    margin: 10px;
     padding: 10px;
+}
+
+.btns_register {
+    display: flex;
+    flex-direction: unset;
+    align-items: center;
+    position: absolute;
+    left: 49%;
+    bottom: 0;
+
+    background-color: transparent;
+}
+.btns_register,
+.pwReset,
+button:hover {
+    background-color: tomato;
+    cursor: pointer;
+}
+.login_btns {
+    position: absolute;
+    left: 41%;
+    bottom: 12%;
+}
+.pwReset {
+    position: absolute;
+    left: 41%;
+    bottom: 40%;
+}
+
+.input_login input {
+    margin: 10px;
+    padding: 10px;
+}
+.login_btns button:hover {
+    background-color: tomato;
+    cursor: pointer;
+}
+.login-div2 {
+    margin: 15px 5px 0px 0px;
+}
+
+.login-div2 a:hover {
+    color: tomato;
+}
+
+.btn_0 {
+    margin-left: 10px;
+}
+.p_0 {
+    margin-left: 45px;
+}
+a {
+    text-decoration: none;
+    color: #000;
 }
 
 .otherProfile img {
@@ -86,18 +184,31 @@ input {
 }
 #profile_container .image-big {
     object-fit: cover;
-    width: 50vw;
+    width: 40vw;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 .profile_container_bio {
-    border: 1px solid tomato;
     width: 30vw;
     height: 200px;
-    margin-left: 30px;
+    margin-left: 70px;
     overflow: auto;
+    align-self: center;
+    text-align: end;
+}
+.profile_container_bio button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+}
+.profile_container_bio button:hover {
+    color: tomato;
+    text-decoration: underline;
 }
 .name {
-    border: 1px solid tomato;
+    border-bottom: 1px solid tomato;
+    margin: 10px;
 }
 /* ----------------------------------- */
 .search_results {
@@ -130,6 +241,9 @@ div .user_box {
 }
 .user_box,
 .friends_box a:hover {
+    color: tomato;
+}
+.user_box:hover {
     color: tomato;
 }
 /* ----------------------------------------- */
@@ -178,7 +292,7 @@ div .user_box {
     height: 120px;
     object-fit: cover;
     border-radius: 10px;
-    border: 1px solid;
+    border: 1px dashed;
 }
 .friends_list {
     display: grid;
