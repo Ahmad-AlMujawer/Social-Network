@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { FriendButton } from "./FriendButton";
 import axios from "axios";
 import { ProfilePic } from "./ProfilePic";
 import { Link } from "react-router-dom";
@@ -48,12 +47,7 @@ export function Friends() {
                 {friends &&
                     friends.map((friend) => (
                         <div key={friend.id} className="friends_box">
-                            {/* <Comonent key={friend.id} {...friend} /> */}
                             <Link to={"/user/" + friend.id}>
-                                {/* <img
-                                    src={friend.imageurl}
-                                    className="friends_img"
-                                /> */}
                                 <ProfilePic
                                     first={friend.first}
                                     last={friend.last}

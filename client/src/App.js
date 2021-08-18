@@ -9,6 +9,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { otherProfile } from "./otherProfile.js";
 import { FindPeople } from "./FindPeople";
 import { Friends } from "./Friends";
+import { Chat } from "./chat";
 
 export default class App extends Component {
     constructor() {
@@ -103,7 +104,7 @@ export default class App extends Component {
                                     </Link>
                                 </li>
                                 <li className="navbar_list">
-                                    <a href="/" className="navbar_links">
+                                    <a href="/chat" className="navbar_links">
                                         Chat
                                     </a>
                                 </li>
@@ -147,6 +148,7 @@ export default class App extends Component {
                     <Route path="/user/:id" component={otherProfile} />
                     <Route path="/users" component={FindPeople} />
                     <Route path="/friends" component={Friends} />
+                    <Route path="/chat" component={Chat} />
                 </div>
             </BrowserRouter>
         );

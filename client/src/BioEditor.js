@@ -38,9 +38,9 @@ export class BioEditor extends Component {
 
     render() {
         if (this.state.editorIsVisible) {
+           
             return (
                 <div className="BioEditor">
-                    <h2>EDIT BIO</h2>
                     <textarea
                         name="bio"
                         defaultValue={this.props.bio}
@@ -52,7 +52,7 @@ export class BioEditor extends Component {
         } else
             return (
                 <div className="BioEditor">
-                    <h3>BIO: {this.props.bio}</h3>
+                    <p>{this.props.bio}</p>
 
                     <button
                         onClick={() => this.setState({ editorIsVisible: true })}

@@ -17,11 +17,6 @@ const io = require("socket.io")(server, {
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
 
-app.get("/", function (req, res) {
-    // just a normal route
-    res.sendStatus(200);
-});
-
 //---------------------------------------------------------------------------------
 
 const diskStorage = multer.diskStorage({
@@ -56,6 +51,16 @@ app.use(
         sameSite: true,
     })
 );
+
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(compression());
 
@@ -368,4 +373,34 @@ app.get("*", function (req, res) {
 
 server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening on port 3001.");
+});
+//-------------------------------------------------------------
+
+io.on("connection", async (socket) => {
+    console.log(`the socket with id: ${socket.id} connected!`);
+    console.log("socket.request.session: ", socket.request.session);
+
+    const { userId } = socket.request.session;
+    console.log("userId for io.on: ", userId);
+    if (!userId) {
+        return socket.disconnect(true);
+    }
+
+    const { rows } = db
+        .getLast10Messages(userId)
+        .catch((err) => console.log("error in db.get10msg: ", err));
+    socket.emit("Last10Messages", rows);
+
+    socket.on("newMesage", async (message) => {
+        try {
+            await db.addMessage(userId(message));
+            const { rows } = await db.getLast10Messages();
+            io.emit("lastMessage", rows);
+        } catch (err) {
+            console.log("error in db.addMessage: ", err);
+        }
+    });
+    socket.on("disconnect", () => {
+        console.log(`the socket with id: ${socket.id} disconnect!`);
+    });
 });

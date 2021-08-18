@@ -19,7 +19,7 @@ export class otherProfile extends Component {
             } else {
                 this.setState({
                     id: data.rows[0].id,
-                    frist: data.rows[0].frist,
+                    first: data.rows[0].first,
                     last: data.rows[0].last,
                     imageurl: data.rows[0].imageurl,
                     bio: data.rows[0].bio,

@@ -137,3 +137,20 @@ module.exports.friendsAndWannabees = (id) => {
     );
 };
 //--------------------------------------------------------------------------------------
+
+module.exports.addMessage = (message_text, userId) => {
+    return db.query(
+        `INSERT INTO messages (message_text, userId) VALUES($1, $2) RETURNING id
+        `,
+        [message_text, userId]
+    );
+};
+
+module.exports.getLast10Messages = () => {
+    return db.query(
+        `SELECT * FROM messages
+         JOIN users ON (user_id = users.id)
+         ORDER BY messages.timestamp DESC
+         LIMIT 10`
+    );
+};

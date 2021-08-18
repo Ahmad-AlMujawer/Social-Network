@@ -17,6 +17,7 @@ input {
     object-fit: cover;
     border: 1px solid;
     border-radius: 10px;
+    margin-top: 10px;
 }
 
 /* -----header profilePic & Logo ---------*/
@@ -85,14 +86,15 @@ input {
 }
 #profile_container .image-big {
     object-fit: cover;
-    width: fit-content;
+    width: 50vw;
 }
 
 .profile_container_bio {
     border: 1px solid tomato;
-    width: 30%;
+    width: 30vw;
     height: 200px;
     margin-left: 30px;
+    overflow: auto;
 }
 .name {
     border: 1px solid tomato;
@@ -101,11 +103,12 @@ input {
 .search_results {
     display: grid;
     grid-template-columns: 150px 150px 150px 150px;
-
     grid-auto-rows: 210px;
     gap: 20px;
     border: 1px solid;
     width: max-content;
+    overflow-y: auto;
+    height: 550px;
 }
 .search_results img {
     width: 100px;
