@@ -190,3 +190,30 @@ div .user_box {
     height: 300px;
     border-bottom: 1px solid #000;
 }
+.btn_in_friends:hover {
+    background-color: tomato;
+    cursor: pointer;
+}
+#chat_container {
+    position: fixed;
+    border-radius: 5px;
+    width: 600px;
+    height: 400px;
+    background: rgb(20, 20, 20, 0.7);
+    top: 10px;
+    left: 54%;
+    transform: translate(-50%, 50%);
+    z-index: 1;
+}
+#chat_container textarea {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%);
+}
+#chat_container button {
+    position: absolute;
+    right: 131px;
+    top: 93%;
+    cursor: pointer;
+}

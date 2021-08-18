@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
 import { Link } from "react-router-dom";
-import { chatMessagesReceived } from "./redux/messages/slice";
+// import { chatMessagesReceived } from "./redux/messages/slice";
 
 export function Chat() {
     // console.log("Chat component is mounted!");
@@ -11,9 +11,9 @@ export function Chat() {
     const chatMessages = useSelector((state) => {
         console.log("state inside chat useSelector: ", state);
 
-        state && state.messages.chatMessagesReceived;
+        state && state.chatMessages;
     });
-
+    // const dispatch = useDispatch();
     useEffect(() => {
         console.log("chatMessages inside useEffect: ", chatMessages);
         if (chatMessages) {
@@ -22,15 +22,24 @@ export function Chat() {
                 messagesContainer.current.clientHeight;
         }
     }, [chatMessages]);
+    // if (!chatMessages) {
+    //     return null;
+    // }
 
     const sendMessage = (e) => {
         console.log("my message value: ", message);
-        if (e.key === "Enter" || e.key === "click") {
+        if (e.key === "Enter" || e.type === "click") {
             socket.emit("newMesage", message);
             e.target.value = "";
         }
     };
-    console.log("chatMessages : ", chatMessages);
+    console.log("newMesage : ", message);
+
+    // var date = new Date();
+    // var ukDate = new Intl.DateTimeFormat("en-GB", {
+    //     dateStyle: "long",
+    //     timeStyle: "short",
+    // }).format(date);
 
     return (
         <div ref={messagesContainer}>
@@ -46,12 +55,12 @@ export function Chat() {
                                 <img src={message.imageurl || "default.jpg"} />
                             </div>
                         </Link>
-                        asdsad
+
                         <p>{message.message_text}</p>
                         <p>{message.timestamp}</p>
                     </div>
                 ))}
-            <div>
+            <div id="chat_container">
                 <textarea
                     className="chat_input_field"
                     placeholder="say hi 🖐️"

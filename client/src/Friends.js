@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ProfilePic } from "./ProfilePic";
@@ -59,37 +59,48 @@ export function Friends() {
                             </Link>
                             <div>
                                 <button
+                                    className="btn_in_friends"
                                     onClick={() =>
                                         dispatch(unfriend(friend.id))
                                     }
                                 >
-                                    unfriend
+                                    Unfriend
                                 </button>
                             </div>
                         </div>
                     ))}
             </div>
-            <div className="friends_list">
+            <div>
                 <h2>Wannabees</h2>
-                {wannabees &&
-                    wannabees.map((wannabe) => (
-                        <div key={wannabe.id} className="friends_box">
-                            <img
-                                src={wannabe.imageurl || "/default.jpg"}
-                                alt={`${wannabe.first} ${wannabe.last}`}
-                            />
-                            <p>
-                                {wannabe.first} {wannabe.last}
-                            </p>
-                            <button
-                                onClick={() =>
-                                    dispatch(acceptFriendRequest(wannabe.id))
-                                }
-                            >
-                                Accept Friend
-                            </button>
-                        </div>
-                    ))}
+                <div className="friends_list">
+                    {wannabees &&
+                        wannabees.map((wannabe) => (
+                            <div key={wannabe.id} className="friends_box">
+                                <Link to={"/user/" + wannabe.id}>
+                                    <ProfilePic
+                                        first={wannabe.first}
+                                        last={wannabe.last}
+                                        imageurl={
+                                            wannabe.imageurl || "/default.jpg"
+                                        }
+                                    />
+                                    <p>
+                                        {wannabe.first} {wannabe.last}
+                                    </p>
+                                </Link>
+                                <button
+                                    className="btn_in_friends"
+                                    onClick={() =>
+                                        dispatch(
+                                            acceptFriendRequest(wannabe.id)
+                                        )
+                                    }
+                                >
+                                    Accept Friend
+                                </button>
+                            </div>
+                        ))}
+                </div>
             </div>
         </div>
     );

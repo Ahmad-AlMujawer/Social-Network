@@ -138,11 +138,11 @@ module.exports.friendsAndWannabees = (id) => {
 };
 //--------------------------------------------------------------------------------------
 
-module.exports.addMessage = (message_text, userId) => {
+module.exports.addMessage = (id, message_text) => {
     return db.query(
-        `INSERT INTO messages (message_text, userId) VALUES($1, $2) RETURNING id
+        `INSERT INTO messages (id, message_text) VALUES($1, $2)
         `,
-        [message_text, userId]
+        [id, message_text]
     );
 };
 

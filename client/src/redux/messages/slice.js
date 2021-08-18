@@ -2,17 +2,11 @@ export function messagesReducer(state = {}, action) {
     // console.log("action in slice: ", action);
 
     if (action.type == "GET/lastMessages") {
-        state = {
-            ...state,
-            chatMessagesReceived: action.msgs,
-        };
+        state = action.payload.mgs;
     }
 
     if (action.type == "GET/newMessage") {
-        state = {
-            ...state,
-            chatMessagesReceived: [...state.chatMessagesReceived, action.msg],
-        };
+        state = [...state, action.payload.msg];
     }
     return state;
 }
@@ -20,13 +14,13 @@ export function messagesReducer(state = {}, action) {
 export function chatMessagesReceived(msgs) {
     return {
         type: "GET/lastMessages",
-        msgs: msgs,
+        msgs: { msgs },
     };
 }
 
 export function chatMessageReceived(msg) {
     return {
         type: " GET/newMessage",
-        msg: msg,
+        msg: { msg },
     };
 }

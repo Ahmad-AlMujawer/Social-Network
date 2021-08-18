@@ -380,22 +380,23 @@ io.on("connection", async (socket) => {
     console.log(`the socket with id: ${socket.id} connected!`);
     console.log("socket.request.session: ", socket.request.session);
 
-    const { userId } = socket.request.session;
+    const  userId  = socket.request.session.userId;
     console.log("userId for io.on: ", userId);
     if (!userId) {
         return socket.disconnect(true);
     }
 
-    const { rows } = db
-        .getLast10Messages(userId)
+    const { rows } = await db
+        .getLast10Messages()
         .catch((err) => console.log("error in db.get10msg: ", err));
     socket.emit("Last10Messages", rows);
+    console.log("rows for last10messages: ", rows);
 
     socket.on("newMesage", async (message) => {
         try {
-            await db.addMessage(userId(message));
+            await db.addMessage(userId, message);
             const { rows } = await db.getLast10Messages();
-            io.emit("lastMessage", rows);
+            io.emit("Last10Messages", rows);
         } catch (err) {
             console.log("error in db.addMessage: ", err);
         }
