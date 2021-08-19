@@ -15,18 +15,13 @@ export function FindPeople() {
                     const { data } = await axios.get(
                         `api/findPeople/${searchTerm}`
                     );
-                    // console.log(
-                    //     "data in /findPeople we're looking for: ",
-                    //     data
-                    // );
+                    
                     setUsers(data);
                 } else {
                     const { data } = await axios.get(`/api/findPeople/name`);
-                    // console.log("data in /findPeople/name Recentusers: ", data);
 
                     if (!abort) {
                         setUsers(data);
-                        // console.log("im seeing !abort", abort);
                     }
                 }
             } catch (err) {
@@ -35,8 +30,6 @@ export function FindPeople() {
             }
         })();
         return () => {
-            // console.log("searchTerm in my return fn: ", searchTerm);
-            // console.log("abort in my return fn: ", abort);
             abort = true;
         };
     }, [searchTerm]);

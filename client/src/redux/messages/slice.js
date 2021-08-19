@@ -1,5 +1,4 @@
-export function messagesReducer(state = {}, action) {
-    // console.log("action in slice: ", action);
+export function messagesReducer(state = [], action) {
 
     if (action.type == "GET/lastMessages") {
         state = action.payload;

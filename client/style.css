@@ -1,9 +1,16 @@
 body {
     background: linear-gradient(to left, teal, lightsalmon);
+    
 }
 .regisration_container,
-.login_fadein {
-    animation: fadeIn ease 5s;
+.login_fadein,
+#profile_container,
+#friends_container,
+#App_container,
+.findPeople_container,
+#messages_container,
+{
+    animation: fadeIn ease 2s;
 }
 
 @keyframes fadeIn {
@@ -65,9 +72,11 @@ body {
 
     background-color: transparent;
 }
-.btns_register,
-.pwReset,
-button:hover {
+.btns_register button:hover {
+    background-color: tomato;
+    cursor: pointer;
+}
+.pwReset button:hover {
     background-color: tomato;
     cursor: pointer;
 }
@@ -195,7 +204,8 @@ a {
     margin-left: 70px;
     overflow: auto;
     align-self: center;
-    text-align: end;
+    line-height: 20px;
+    
 }
 .profile_container_bio button {
     background-color: transparent;
@@ -211,6 +221,13 @@ a {
     margin: 10px;
 }
 /* ----------------------------------- */
+.findPeople_container input {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid;
+}
 .search_results {
     display: grid;
     grid-template-columns: 150px 150px 150px 150px;
@@ -239,7 +256,9 @@ div .user_box {
     text-decoration: none;
     color: #000;
 }
-.user_box,
+.user_box a:hover {
+    color: tomato;
+}
 .friends_box a:hover {
     color: tomato;
 }
@@ -311,23 +330,65 @@ div .user_box {
 #chat_container {
     position: fixed;
     border-radius: 5px;
-    width: 600px;
-    height: 400px;
-    background: rgb(20, 20, 20, 0.7);
-    top: 10px;
-    left: 54%;
-    transform: translate(-50%, 50%);
+    width: 59.4%;
+    height: 15vh;
+    background: rgb(20, 20, 20, 0.6);
+    bottom: 3px;
+
     z-index: 1;
 }
 #chat_container textarea {
     position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%);
+    top: 8px;
+    left: 2px;
+    border-radius: 5px;
 }
 #chat_container button {
     position: absolute;
-    right: 131px;
-    top: 93%;
+    bottom: 10%;
+    right: 30%;
     cursor: pointer;
+    border: none;
+    background: lightblue;
+    border-radius: 10px;
+    padding: 5px;
+}
+.user_message {
+    margin: 10px;
+}
+.user_message img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 35%;
+    align-self: center;
+    margin-right: 10px;
+}
+.user_message a p {
+    margin: 10px 10px 0 0;
+    font-family: monospace;
+}
+#messages_container {
+    width: 60%;
+    height: 60vh;
+    overflow-y: auto;
+    background-color: aliceblue;
+    border-radius: 5px;
+    position: relative;
+}
+.user_in_chat {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    width: 600px;
+    height: fit-content;
+    background: lightgray;
+    border-radius: 20px;
+}
+.datum {
+    font-size: 14px;
+}
+.message_text {
+    font-size: 16px;
+    font-family: "Libre Caslon Text", serif;
 }

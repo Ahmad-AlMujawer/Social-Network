@@ -17,7 +17,7 @@ exports.upload = (req, res, next) => {
     if (!req.file) {
         return res.sendStatus(500);
     }
-    // console.log("req.file: ", req.file);
+    
 
     const { filename, mimetype, size, path } = req.file;
 
@@ -34,11 +34,9 @@ exports.upload = (req, res, next) => {
 
     promise
         .then(() => {
-            // console.log("it worked!!!");
             next();
         })
         .catch((err) => {
-            // uh oh
             console.log("err in s3 upload put object: ", err);
             res.sendStatus(404);
         });

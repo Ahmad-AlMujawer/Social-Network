@@ -1,4 +1,4 @@
-import { Logo } from "./logo";
+
 export function ProfilePic({ first, last, imageurl, toggleModal }) {
     imageurl = imageurl || "default.png";
     return (

@@ -12,13 +12,10 @@ export class Registration extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        console.log("user clicked Signup");
-        console.log("this.state in Registration handleSubmit: ", this.state);
         axios
             .post("/register", this.state)
             .then((resp) => {
                 if (resp.data.success) {
-                    // console.log("resp in my if register: ", resp);
                     location.reload();
                 } else {
                     this.setState({
@@ -34,13 +31,10 @@ export class Registration extends Component {
             });
     }
     handleChange({ target }) {
-        // console.log("handerChange input for: ", target.name);
-        // console.log("user input value: ", target.value);
         this.setState(
             {
                 [target.name]: target.value,
             }
-            // console.log("this.state in Registration handleChange: ", this.state)
         );
     }
     render() {

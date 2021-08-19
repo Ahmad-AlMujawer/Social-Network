@@ -11,7 +11,6 @@ export class BioEditor extends Component {
         this.textareaToggle = this.textareaToggle.bind(this);
         this.updateBio = this.updateBio.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        // console.log("props in BioEditor: ", props);
     }
 
     textareaToggle() {
@@ -47,7 +46,12 @@ export class BioEditor extends Component {
                         defaultValue={this.props.bio}
                         onChange={this.handleChange}
                     />
-                    <button onClick={this.updateBio}>📝 </button>
+                    <button
+                        onClick={this.updateBio}
+                        style={{ cursor: "pointer" }}
+                    >
+                        📝{" "}
+                    </button>
                 </div>
             );
         } else
@@ -56,9 +60,10 @@ export class BioEditor extends Component {
                     <p>{this.props.bio}</p>
 
                     <button
+                        style={{ cursor: "pointer" }}
                         onClick={() => this.setState({ editorIsVisible: true })}
                     >
-                        📝
+                        📝 add bio
                     </button>
                 </div>
             );

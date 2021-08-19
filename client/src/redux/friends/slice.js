@@ -1,5 +1,6 @@
+import axios from "axios";
+
 export function friendsAndWannabeesReducer(state = {}, action) {
-    // console.log("action in slice: ", action);
     if (action.type === "friends/received") {
         state = {
             ...state,
@@ -20,19 +21,11 @@ export function friendsAndWannabeesReducer(state = {}, action) {
         });
     }
     if (action.type === "friends/unfriended") {
-        state = state.map((friend) => {
-            if (friend.id === action.payload.id) {
-                return {
-                    ...friend,
-                    accepted: false,
-                };
-            } else {
-                return friend;
-            }
+        return state.filter((friend) => {
+            return friend.id != action.payload.id;
         });
     }
 
-    console.log("state in slice: ", state);
     return state;
 }
 
@@ -44,16 +37,26 @@ export function receiveFriendsAndWannabees(fnw) {
 }
 
 export function acceptFriendRequest(id) {
-    return {
-        type: "friends/accepted",
-        payload: id,
+    return async (dispatch) => {
+        const { data } = await axios.post(`/friendship/${id}`, {
+            buttonText: "Accept Friend Request",
+        });
+        dispatch({
+            type: "friends/accepted",
+            payload: id,
+        });
     };
 }
 
 export function unfriend(id) {
-    return {
-        type: "friends/unfriended",
-        payload: id,
+    return async (dispatch) => {
+        const { data } = await axios.post(`/friendship/${id}`, {
+            buttonText: "End Friendship / Unfriend",
+        });
+
+        dispatch({
+            type: "friends/unfriended",
+            payload: id,
+        });
     };
 }
-

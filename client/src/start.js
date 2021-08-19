@@ -8,10 +8,10 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import * as immutableState from "redux-immutable-state-invariant";
 import reducer from "./redux/reducer.js";
 import { init } from "./socket.js";
-
+import thunk from "redux-thunk";
 const store = createStore(
     reducer,
-    composeWithDevTools(applyMiddleware(immutableState.default()))
+    composeWithDevTools(applyMiddleware(immutableState.default(), thunk))
 );
 
 axios.get("/user/id.json").then(function ({ data }) {
@@ -27,7 +27,6 @@ axios.get("/user/id.json").then(function ({ data }) {
         );
     }
 });
-// To make data stored in Redux available to your React components, the first thing you must do is wrap the highest-level component in your app in the Provider component exported by react-redux. You will have to pass your store to Provider as a prop.
 
 
 

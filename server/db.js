@@ -89,7 +89,6 @@ module.exports.getMatchingUsers = (val) => {
 //---------------------------Friendship Query----------------------------------------
 
 module.exports.checkFriendStatus = (userId, otherUserId) => {
-    console.log("getting checkFriendStatus from db");
     return db.query(
         `SELECT * FROM friendships
          WHERE (recipient_id = $1 AND sender_id = $2)
@@ -138,11 +137,11 @@ module.exports.friendsAndWannabees = (id) => {
 };
 //--------------------------------------------------------------------------------------
 
-module.exports.addMessage = (id, message_text) => {
+module.exports.addMessage = (user_id, message_text) => {
     return db.query(
-        `INSERT INTO messages (id, message_text) VALUES($1, $2)
+        `INSERT INTO messages (user_id, message_text) VALUES($1, $2)
         `,
-        [id, message_text]
+        [user_id, message_text]
     );
 };
 

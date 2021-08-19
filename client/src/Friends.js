@@ -14,13 +14,11 @@ export function Friends() {
     const dispatch = useDispatch();
 
     const friends = useSelector((state) => {
-        console.log("state inside useSelector: ", state);
         return (
             state.friends.friendsAndWannabees &&
             state.friends.friendsAndWannabees.filter(({ accepted }) => accepted)
         );
     });
-    console.log("friends: ", friends);
 
     const wannabees = useSelector((state) => {
         return (
@@ -30,17 +28,15 @@ export function Friends() {
             )
         );
     });
-    console.log("wannabees: ", wannabees);
     useEffect(() => {
         (async () => {
             const { data } = await axios.get("/friends-and-wanabees");
-            console.log("data in axios /friends: ", data);
             dispatch(receiveFriendsAndWannabees(data));
         })();
     }, []);
 
     return (
-        <div>
+        <div id="friends_container">
             <h2>Friends</h2>
 
             <div className="friends_list">

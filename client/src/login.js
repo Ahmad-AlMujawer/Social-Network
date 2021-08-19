@@ -10,15 +10,10 @@ export class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit() {
-        // e.preventDefault(); im not in the form anymoe don't need this
-        console.log("Login was clicked");
-        // console.log("this.state in Login handelSubmit: ", this.state);
         axios
             .post("/login", this.state)
             .then((resp) => {
-                console.log("resp from post login: ", resp);
                 if (resp.data.success) {
-                    console.log("resp in my if login: ", resp);
                     location.replace("/");
                 } else {
                     this.setState({
@@ -32,8 +27,6 @@ export class Login extends Component {
             });
     }
     handleChange({ target }) {
-        // console.log("handleChange input for: ", target.name);
-        // console.log("user input value: ", target.value);
         this.setState({
             [target.name]: target.value,
         });

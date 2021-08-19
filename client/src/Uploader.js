@@ -8,21 +8,18 @@ export class Uploader extends Component {
             file: null,
         };
 
-        console.log("props in Uploader: ", props);
         this.methodInUploader = this.methodInUploader.bind(this);
-        this.closeUploader = this.closeUploader.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.closeUploader = this.closeUploader.bind(this);
     }
 
     methodInUploader() {
         var formData = new FormData();
         formData.append("file", this.state.file);
-        console.log("formaData: ", formData);
 
         axios
             .post("/upload", formData)
             .then((resp) => {
-                console.log("resp in my /upload: ", resp);
                 this.props.methodInApp(resp.data.imageurl);
             })
             .catch((err) => console.log("error in axios /upöoad: ", err));
@@ -49,7 +46,6 @@ export class Uploader extends Component {
                         onChange={this.handleChange}
                     />
                 </div>
-
                 <button onClick={this.methodInUploader}>➕ Upload Photo</button>
             </div>
         );

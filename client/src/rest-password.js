@@ -17,7 +17,6 @@ export class RestPassword extends Component {
             {
                 [target.name]: target.value,
             },
-            console.log("this.state in RestPassword: ", this.state)
         );
     }
     handleSubmit() {
@@ -130,7 +129,12 @@ export class RestPassword extends Component {
                 <div>
                     <h1>
                         You have successfully reset your password.{" "}
-                        <button>
+                        <button
+                            style={{
+                                padding: "10px",
+                                background: "tan",
+                            }}
+                        >
                             <Link to="/login">login</Link>
                         </button>
                     </h1>

@@ -4,7 +4,6 @@ import { FriendBtn } from "./FriendButton";
 
 export class otherProfile extends Component {
     constructor(props) {
-        // console.log("props in otherProfile: ", props);
         super(props);
         this.state = {};
     }
@@ -13,7 +12,6 @@ export class otherProfile extends Component {
             const { data } = await axios.get(
                 `/api/user/${this.props.match.params.id}`
             );
-            // console.log("data in axios api/user/otheruser: ", data);
             if (!data) {
                 return this.props.history.push("/");
             } else {
@@ -24,7 +22,6 @@ export class otherProfile extends Component {
                     imageurl: data.rows[0].imageurl,
                     bio: data.rows[0].bio,
                 });
-                // console.log("data inside else  : ", data);
             }
         } catch (err) {
             console.log("error in otherProfile: ", err);

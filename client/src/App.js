@@ -31,7 +31,6 @@ export default class App extends Component {
         axios
             .get("/user", this.state)
             .then((resp) => {
-                // console.log("resp in axios GET /user: ", resp);
                 this.setState({
                     first: resp.data.first,
                     last: resp.data.last,
@@ -46,10 +45,12 @@ export default class App extends Component {
     }
 
     toggleModal() {
-        // console.log("my toggleModal is working");
         this.setState({
             uploaderIsVisible: !this.state.uploaderIsVisible,
         });
+    }
+    handlePropagation(e) {
+        e.stopPropagation();
     }
 
     methodInApp(imageurl) {
@@ -117,13 +118,17 @@ export default class App extends Component {
                             className="upload_btn"
                             onClick={this.toggleModal}
                         >
-                            📷
+                            ⬆️
                         </button>
+
                         {this.state.uploaderIsVisible && (
-                            <Uploader
-                                methodInApp={this.methodInApp}
-                                methodInUploader={this.toggleModal}
-                            />
+                            <div>
+                                <Uploader
+                                    methodInApp={this.methodInApp}
+                                    methodInUploader={this.toggleModal}
+                                    onClick={this.handlePropagation}
+                                />
+                            </div>
                         )}
                     </div>
 

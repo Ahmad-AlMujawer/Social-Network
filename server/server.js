@@ -79,12 +79,9 @@ app.post("/register", (req, res) => {
 
     hash(password)
         .then((hashedPass) => {
-            // console.log("hashedPass in register:  ", hashedPass);
-
             db.register(first, last, email, hashedPass)
                 .then((data) => {
                     req.session.userId = data.rows[0].id;
-                    // console.log("my userId in db.register: ", data.rows);
                     res.json({ success: true });
                 })
                 .catch((err) => {
@@ -100,16 +97,10 @@ app.post("/register", (req, res) => {
 //----------------------------login-------------------------------------------------
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
-    // console.log("req.body in login: ", req.body);
-    // hash(password)
-    //     .then((hashedPass) => {
-    //         console.log("hashedPass in login:  ", hashedPass);
     db.getLoginInfo(email)
         .then((data) => {
-            // console.log("data from db.getlogininfo: ", data);
             compare(password, data.rows[0].hashed_password)
                 .then((match) => {
-                    // console.log("match outside my if stetment :", match);
                     if (match === true) {
                         req.session.userId = data.rows[0].id;
                         res.json({ success: true });
@@ -256,7 +247,6 @@ app.get("/api/findPeople/:name", async (req, res) => {
         try {
             const { rows } = await db.getRecentUsers();
             res.json(rows);
-            console.log("rows in getRecentUsers: ", rows);
         } catch (err) {
             console.log("error in /findPeople db.getRecentUsers: ", err);
             res.json({ success: false });
@@ -264,7 +254,6 @@ app.get("/api/findPeople/:name", async (req, res) => {
     } else {
         try {
             const { rows } = await db.getMatchingUsers(req.params.name);
-            console.log("rows in db.getMatchingusers: ", rows);
             res.json(rows);
         } catch (err) {
             console.log(
@@ -277,16 +266,11 @@ app.get("/api/findPeople/:name", async (req, res) => {
 });
 //------------------------------Friendship---------------------------------------------------
 app.get("/checkFriendStatus/:id", async (req, res) => {
-    console.log("GET requerst to checkFriendStatus been hit");
     const userId = req.session.userId;
     const otherUserId = req.params.id;
 
-    console.log("userId in checkstatus: ", userId);
-    console.log("otherUserId in checkstatus: ", otherUserId);
-
     try {
         const { rows } = await db.checkFriendStatus(userId, otherUserId);
-        console.log("checkFriendStatus: ", rows);
         if (!rows.length) {
             res.json({ buttonText: "Send Friend Request" });
         } else if (rows[0].accepted) {
@@ -326,7 +310,6 @@ app.post("/friendship/:id", async (req, res) => {
                 otherUserId: data.recipient_id,
                 buttonText: "End Friendship / Unfriend",
             });
-            console.log("data:", data);
         } catch (err) {
             console.log("error in db.acceptFriendRequest: ", err);
         }
@@ -348,16 +331,15 @@ app.post("/friendship/:id", async (req, res) => {
         }
     }
 });
+
 //---------------------------------------------------------------------------------
 app.get("/friends-and-wanabees", async (req, res) => {
-    console.log("GET req to /friends-and-wanabees has been made!");
     const { rows } = await db
         .friendsAndWannabees(req.session.userId)
         .catch((err) => {
             console.log("error in db.getFriendsList: ", err);
             res.json({ success: false });
         });
-    console.log("rows in friends-and-wannabees: ", rows);
     res.json(rows);
 });
 //---------------------------------------------------------------------------------
@@ -374,14 +356,13 @@ app.get("*", function (req, res) {
 server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening on port 3001.");
 });
-//-------------------------------------------------------------
+//=======================================================================socket========================================================================================
 
 io.on("connection", async (socket) => {
     console.log(`the socket with id: ${socket.id} connected!`);
-    console.log("socket.request.session: ", socket.request.session);
+    // console.log("socket.request.session: ", socket.request.session);
 
-    const  userId  = socket.request.session.userId;
-    console.log("userId for io.on: ", userId);
+    const userId = socket.request.session.userId;
     if (!userId) {
         return socket.disconnect(true);
     }
@@ -390,20 +371,17 @@ io.on("connection", async (socket) => {
         .getLast10Messages()
         .catch((err) => console.log("error in db.get10msg: ", err));
 
-
-    socket.emit("Last10Messages", rows);
-    console.log("rows for last10messages: ", rows);
+    socket.emit("Last10Messages", rows.reverse());
 
     socket.on("newMesage", async (message) => {
         try {
             await db.addMessage(userId, message);
             const { rows } = await db.getLast10Messages();
-            io.emit("Last10Messages", rows);
+            io.emit("Last10Messages", rows.reverse());
         } catch (err) {
             console.log("error in db.addMessage: ", err);
         }
     });
-
 
     socket.on("disconnect", () => {
         console.log(`the socket with id: ${socket.id} disconnect!`);
