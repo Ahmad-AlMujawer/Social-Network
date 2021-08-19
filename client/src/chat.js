@@ -11,7 +11,7 @@ export function Chat() {
     const chatMessages = useSelector((state) => {
         console.log("state inside chat useSelector: ", state);
 
-        state && state.chatMessages;
+        state && state.messages.Last10Messages;
     });
     // const dispatch = useDispatch();
     useEffect(() => {

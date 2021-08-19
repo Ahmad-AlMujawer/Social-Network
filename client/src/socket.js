@@ -10,11 +10,11 @@ export const init = (store) => {
     if (!socket) {
         socket = io.connect();
 
-        socket.on("chatMessages", (msgs) =>
+        socket.on("Last10Messages", (msgs) =>
             store.dispatch(chatMessagesReceived(msgs))
         );
 
-        socket.on("chatMessage", (msg) =>
+        socket.on("Last10Messages", (msg) =>
             store.dispatch(chatMessageReceived(msg))
         );
     }

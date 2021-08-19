@@ -389,6 +389,8 @@ io.on("connection", async (socket) => {
     const { rows } = await db
         .getLast10Messages()
         .catch((err) => console.log("error in db.get10msg: ", err));
+
+
     socket.emit("Last10Messages", rows);
     console.log("rows for last10messages: ", rows);
 
@@ -401,6 +403,8 @@ io.on("connection", async (socket) => {
             console.log("error in db.addMessage: ", err);
         }
     });
+
+
     socket.on("disconnect", () => {
         console.log(`the socket with id: ${socket.id} disconnect!`);
     });
