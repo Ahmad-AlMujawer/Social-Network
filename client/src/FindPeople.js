@@ -53,7 +53,7 @@ export function FindPeople() {
                                 <ProfilePic
                                     first={user.first}
                                     last={user.last}
-                                    imageurl={user.imageurl || "/default.jpg"}
+                                    imageurl={user.imageurl || "default.png"}
                                 />
                                 <p>
                                     {user.first} {user.last}

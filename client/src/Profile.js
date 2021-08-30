@@ -1,6 +1,7 @@
 import { ProfilePic } from "./ProfilePic";
 import { BioEditor } from "./BioEditor";
 
+
 export function Profile({
     first,
     last,
@@ -12,6 +13,7 @@ export function Profile({
     imageurl = imageurl || "default.png";
     return (
         <>
+            
             <div id="profile_container">
                 <div className="profile_container_pic">
                     <ProfilePic

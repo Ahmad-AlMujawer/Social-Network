@@ -32,7 +32,7 @@ export class otherProfile extends Component {
         return (
             <div className="profile_container otherProfile">
                 <img
-                    src={this.state.imageurl || "/default.jpg"}
+                    src={this.state.imageurl || "/default.png"}
                     alt={`${this.state.first} ${this.state.last}`}
                 />
 

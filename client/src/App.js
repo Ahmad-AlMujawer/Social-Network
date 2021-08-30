@@ -5,11 +5,12 @@ import { ProfilePic } from "./ProfilePic.js";
 import { Uploader } from "./Uploader";
 import { Profile } from "./Profile";
 import { Link } from "react-router-dom";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom"; 
 import { otherProfile } from "./otherProfile.js";
 import { FindPeople } from "./FindPeople";
 import { Friends } from "./Friends";
 import { Chat } from "./chat";
+
 
 export default class App extends Component {
     constructor() {
@@ -154,6 +155,7 @@ export default class App extends Component {
                     <Route path="/users" component={FindPeople} />
                     <Route path="/friends" component={Friends} />
                     <Route path="/chat" component={Chat} />
+                   
                 </div>
             </BrowserRouter>
         );

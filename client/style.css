@@ -1,6 +1,5 @@
 body {
     background: linear-gradient(to left, teal, lightsalmon);
-    
 }
 .regisration_container,
 .login_fadein,
@@ -8,9 +7,9 @@ body {
 #friends_container,
 #App_container,
 .findPeople_container,
-#messages_container,
-{
-    animation: fadeIn ease 2s;
+#messages_container {
+
+    animation: fadeIn ease 1s;
 }
 
 @keyframes fadeIn {
@@ -205,7 +204,6 @@ a {
     overflow: auto;
     align-self: center;
     line-height: 20px;
-    
 }
 .profile_container_bio button {
     background-color: transparent;

@@ -40,3 +40,5 @@ CREATE TABLE reset_codes(
    user_id INT REFERENCES users(id) NOT NULL,
    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
  );
+
+

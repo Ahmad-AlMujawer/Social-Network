@@ -10,6 +10,7 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
 const ses = require("./ses.js");
+// const { datum } = require("./datum");
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
@@ -343,11 +344,15 @@ app.get("/friends-and-wanabees", async (req, res) => {
     res.json(rows);
 });
 //---------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------------
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/register");
     return;
 });
+
 //-------------------------------------------------------------
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

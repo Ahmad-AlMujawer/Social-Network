@@ -29,7 +29,6 @@ export function Chat() {
         }
     };
 
-
     return (
         <>
             <h1>Chat Room</h1>
@@ -46,15 +45,13 @@ export function Chat() {
                                 </p>
                             </Link>
                             <div className="user_in_chat">
-                                <img src={message.imageurl || "default.jpg"} />
+                                <img src={message.imageurl || "default.png"} />
 
                                 <div>
                                     <p className="message_text">
                                         {message.message_text}
                                     </p>{" "}
-                                    <Moment fromNow className="datum">
-                                        {message.timestamp}
-                                    </Moment>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -80,4 +77,5 @@ export function Chat() {
             </div>
         </>
     );
+    
 }

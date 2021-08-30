@@ -148,8 +148,10 @@ module.exports.addMessage = (user_id, message_text) => {
 module.exports.getLast10Messages = () => {
     return db.query(
         `SELECT * FROM messages
-         JOIN users ON (user_id = users.id)
-         ORDER BY messages.timestamp DESC
-         LIMIT 10`
+            JOIN users ON (user_id = users.id)
+            ORDER BY messages.timestamp DESC
+            LIMIT 10`
     );
 };
+
+//--------------------------------------------------------------------------------------
