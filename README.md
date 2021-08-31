@@ -1,10 +1,10 @@
 # Social-Network
 This is a single-page application built with React.js, Redux and Socket.Io.
 
-``` $ git clone https://github.com/ahmad-mj/Social-Network.git
+```
+$ git clone https://github.com/ahmad-mj/Social-Network.git
 $ cd Social-Network
 $ npm install
-$ cd config && touch secret.json 
 ```
 
 **configure your code, and paste the follwoing in secret.json**
