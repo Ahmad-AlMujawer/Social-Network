@@ -1,4 +1,4 @@
-# Social-Network
+# Clone 
 This is a single-page application built with React.js, Redux and Socket.Io.
 
 ```
