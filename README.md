@@ -23,7 +23,7 @@ $ npm install
  **Profile**
 <img src=""/>
 
-** Friends**
+**Friends**
 <img src=""/>
 
 **Chat**
