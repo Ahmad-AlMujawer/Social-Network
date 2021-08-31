@@ -14,7 +14,6 @@ $ npm install
     "sessionSecret": "this is a secret!!",
     "AWS_KEY": "XXXXXXX",
     "AWS_SECRET": "XXXXXXX/XXXXXXX/",
-    "AWS_BUCKET": "socialnetwork",
     "s3Url": "https://s3.amazonaws.com/XXXXXXX/"
 }
 ```
