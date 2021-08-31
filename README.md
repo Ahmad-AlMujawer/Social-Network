@@ -17,11 +17,14 @@ $ npm install
     "s3Url": "https://s3.amazonaws.com/XXXXXXX/"
 }
 ```
-## Register/login
+**Register/login**
 <img src=""/>
-## Profile
+
+ **Profile**
 <img src=""/>
-## Friends
+
+** Friends**
 <img src=""/>
-## Chat
+
+**Chat**
 <img src=""/>
