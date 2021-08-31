@@ -5,10 +5,10 @@ This is a single-page application built with React.js, Redux and Socket.Io.
 $ cd Social-Network
 $ npm install
 $ cd config && touch secret.json 
-
+```
 **secret.json**
-* configure your code, and paste the follwoing in secret.json *
-
+**configure your code, and paste the follwoing in secret.json
+```
 {
     "psqlConfig": "postgres:postgres:postgres@localhost:5432/socialnetwork",
     "sessionSecret": "this is a secret!!",
