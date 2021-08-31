@@ -17,3 +17,4 @@ $ npm install
     "s3Url": "https://s3.amazonaws.com/XXXXXXX/"
 }
 ```
+<img src=""/>
